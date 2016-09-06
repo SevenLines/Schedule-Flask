@@ -19,9 +19,11 @@ def group_schedule(kont_id):
     group = Kontgrp.query.get(kont_id)
     raspis = Raspis.get_for_kontgrp(group)
 
-    raspis = {day: list(lessons) for day, lessons in groupby(raspis, lambda x: x.day)}
+    schedule = {day: {
+        para: list(lessons) for para, lessons in groupby(paras, lambda x: (x.para - 1) % 7 + 1)
+    } for day, paras in groupby(raspis, lambda x: x.day)}
 
     return render_template("groups/schedule.html", **{
         "group": group,
-        "raspis": raspis
+        "schedule": schedule
     })
