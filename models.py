@@ -1,3 +1,5 @@
+from sqlalchemy.sql.expression import or_
+
 from base import db
 
 
@@ -58,8 +60,8 @@ class Raspnagr(db.Model):
     sem = db.Column(db.Integer)
     pred_id = db.Column("pred", db.Integer, db.ForeignKey("vacpred.id_15"))
     kaf_id = db.Column("kaf", db.Integer, db.ForeignKey("vackaf.id_17"))
-    foubch = db.Column(db.SmallInteger)
-    afoubch = db.Column(db.SmallInteger)
+    fobuch = db.Column(db.SmallInteger)
+    afobuch = db.Column(db.SmallInteger)
     nagrid = db.Column(db.Integer)
     h = db.Column(db.Float)
     hy = db.Column(db.Float)
@@ -76,6 +78,15 @@ class Raspnagr(db.Model):
     hy1 = db.Column(db.Integer)
     hy2 = db.Column(db.Integer)
     syear = db.Column(db.Integer)
+
+    raspis = db.relationship('Raspis', backref='raspnagr', lazy='dynamic')
+
+    @classmethod
+    def get_for_kontgrp(self, kontgrp):
+        raspnagrs = Raspnagr.query.filter(
+            or_(Raspnagr.kontgrp_id==kontgrp.id, Raspnagr.kontkurs_id==kontgrp.kont_id)
+        )
+        return raspnagrs
 
 
 class Korpus(db.Model):
@@ -106,6 +117,8 @@ class Auditory(db.Model):
     def __repr__(self):
         return str(self)
 
+    raspnagr = db.relationship('Raspnagr', backref='auditory', lazy='dynamic')
+
 
 class Discipline(db.Model):
     __tablename__ = "vacpred"
@@ -113,12 +126,16 @@ class Discipline(db.Model):
     title = db.Column("pred", db.String(250))
     titles = db.Column("preds", db.String(250))
 
+    raspnagr = db.relationship('Raspnagr', backref='discipline', lazy='dynamic')
+
 
 class Teacher(db.Model):
     __tablename__ = "prepods"
     id = db.Column('id_61', db.Integer, primary_key=True)
     full_name = db.Column('prep', db.String(100))
     name = db.Column('preps', db.String(50))
+
+    raspnagr = db.relationship('Raspnagr', backref='teacher', lazy='dynamic')
 
 
 class Faculty(db.Model):
@@ -143,13 +160,22 @@ class Normtime(db.Model):
 
 
 class Raspis(db.Model):
-    id = db.Column('id_56', db.Integer, primary_key=True)
-    raspnagr = db.Column(db.Integer, db.ForeignKey('id_51'))
+    id = db.Column('id_55', db.Integer, primary_key=True)
+    raspnagr_id = db.Column("raspnagr", db.Integer, db.ForeignKey('raspnagr.id_51'))
     everyweek = db.Column(db.SmallInteger)
     day = db.Column(db.SmallInteger)
     para = db.Column(db.SmallInteger)
-    kolpar = db.Column(db.SmallInteger)
+    kol_par = db.Column(db.SmallInteger)
     aud = db.Column(db.Integer, db.ForeignKey('id_60'))
     n_zan = db.Column(db.Integer)
-    num_zan = db.Column(db.Integer)
+    num_zant = db.Column(db.Integer)
     insdate = db.Column(db.DateTime)
+
+
+    @classmethod
+    def get_for_kontgrp(self, kontgrp):
+        raspis = Raspis.query.filter(
+            or_(Raspis.raspnagr.has(kontkurs_id=kontgrp.kont_id), Raspis.raspnagr.has(kontgrp_id=kontgrp.id))
+        ).order_by(Raspis.day, Raspis.para)
+
+        return raspis

@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h1>{{ group.title }}</h1>
+
+    {% for day in raspis.values() %}
+        {% for lesson in day %}
+            {{ lesson.raspnagr.discipline.title }} - {{ lesson.raspnagr.teacher.name }}
+            | {{ lesson.raspnagr.auditory.title }}
+            <br>
+        {% endfor %}
+        <p>
+    {% endfor %}
+{% endblock %}
