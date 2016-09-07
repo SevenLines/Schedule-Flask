@@ -1,0 +1,38 @@
+table.schedule {
+  font-size: 0.9em;
+  border-collapse: collapse; }
+  table.schedule > tbody > tr {
+    border-bottom: 4px solid silver; }
+    table.schedule > tbody > tr > td, table.schedule > tbody > tr th {
+      width: 16%;
+      border: 1px solid silver; }
+      table.schedule > tbody > tr > td div, table.schedule > tbody > tr th div {
+        position: relative;
+        overflow: hidden; }
+      table.schedule > tbody > tr > td:first-child, table.schedule > tbody > tr th:first-child {
+        width: auto;
+        text-align: center; }
+    table.schedule > tbody > tr:last-child {
+      border-bottom: none; }
+  table.schedule .lesson-table {
+    width: 100%;
+    border-collapse: collapse; }
+    table.schedule .lesson-table td {
+      border: none; }
+  table.schedule .lesson {
+    padding: 0.25em;
+    min-height: 30px;
+    background: white; }
+    table.schedule .lesson .discipline {
+      font-weight: bold; }
+    table.schedule .lesson .teacher {
+      color: #9C1A1C; }
+    table.schedule .lesson.empty {
+      background: #eeeeee; }
+    table.schedule .lesson.odd {
+      top: 0;
+      border-bottom: 1px dashed black; }
+    table.schedule .lesson.even {
+      bottom: 0; }
+
+/*# sourceMappingURL=main.css.map */

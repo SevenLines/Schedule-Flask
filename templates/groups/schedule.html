@@ -1,20 +1,78 @@
 {% extends "layout.html" %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
+{% endblock %}
 {% block body %}
-    <h1>{{ group.title }}</h1>
-
-    {% for day in [1,2,3,4,5,6,7] %}
-        {% for para in [1,2,3,4,5,6,7,8] %}
-            {% with d = schedule.get(day) %}
-                {% if d %}
-                    {% with para = schedule.get(day).get(para) %}
-                        {% for lesson in para %}
-                        {{ lesson.raspnagr.discipline.title }} - {{ lesson.raspnagr.teacher.name }}
-            | {{ lesson.raspnagr.auditory.title }}
-                    {% endwith %}
-                {% endif %}
-            {% endwith %}
-            <br>
+    <form action="">
+        <select name="kontgrp" id=""></select>
+    </form>
+    <table class="schedule">
+        <tbody>
+        {% for para, days in schedule.items() %}
+            <tr>
+                <td>{{ para|parainfo }}</td>
+                {% for day, weeks in days.items() %}
+                    {% if para == 0 and day != 0 %}
+                        <th>{{ day|dayofweek }}</th>
+                    {% else %}
+                        <td>
+                            {% set lesson_every = weeks['everyweek'] %}
+                            {% set lesson_odd = weeks['odd'] %}
+                            {% set lesson_even = weeks['even'] %}
+                            {% if lesson_every %}
+                                <div class="lesson everyweek">
+                                    <span class="discipline">{{ lesson_every.raspnagr.discipline.title }}</span>
+                                    <br>
+                                    <span class="teacher">{{ lesson_every.raspnagr.teacher.name }}</span>
+                                    <span class="auditory">{{ lesson_every.raspnagr.auditory.title }}</span>
+                                </div>
+                            {% elif lesson_odd or lesson_even %}
+                                <table class="lesson-table">
+                                    <tr>
+                                        <td>
+                                            <div class="lesson odd {% if not lesson_odd %}empty{% endif %}">
+                                                {% if lesson_odd %}
+                                                    <span class="discipline">{{ lesson_odd.raspnagr.discipline.title }}</span>
+                                                    <br>
+                                                    <span class="teacher">{{ lesson_odd.raspnagr.teacher.name }}</span>
+                                                    <span class="auditory">{{ lesson_odd.raspnagr.auditory.title }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="lesson even {% if not lesson_even %}empty{% endif %}">
+                                                {% if lesson_even %}
+                                                    <span class="discipline">{{ lesson_even.raspnagr.discipline.title }}</span>
+                                                    <br>
+                                                    <span class="teacher">{{ lesson_even.raspnagr.teacher.name }}</span>
+                                                    <span class="auditory">{{ lesson_even.raspnagr.auditory.title }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endfor %}
+                <p>
+            </tr>
         {% endfor %}
-        <p>
-    {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
+    <script type="text/javascript">
+        var data = JSON.parse('{{ groups_json|safe }}');
+        $('select[name="kontgrp"]').select2({
+            data: data,
+            minimumInputLength: 2
+        }).val('{{ group.id }}').change();
+    </script>
 {% endblock %}

@@ -1,0 +1,56 @@
+table.schedule {
+  font-size: 0.9em;
+  border-collapse: collapse;
+
+  & > tbody > tr {
+    & > td, th {
+      width: 16%;
+      border: 1px solid silver;
+
+      div {
+        position: relative;
+        overflow: hidden;
+      }
+      &:first-child {
+        width: auto;
+        text-align: center;
+      }
+    }
+    border-bottom: 4px solid silver;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .lesson-table {
+    width: 100%;
+    border-collapse: collapse;
+    td {
+      border: none;
+    }
+  }
+
+  .lesson {
+    padding: 0.25em;
+    .discipline {
+      font-weight: bold;
+    }
+    .teacher {
+      color: #9C1A1C;
+    }
+
+    min-height: 30px;
+    background: white;
+    &.empty {
+      background: #eeeeee;
+    }
+
+    &.odd {
+      top: 0;
+      border-bottom: 1px dashed black;
+    }
+    &.even {
+      bottom: 0;
+    }
+  }
+}
