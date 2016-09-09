@@ -48,9 +48,15 @@
     <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
     <script>
         var data = JSON.parse('{{ groups_json|safe }}');
-        $('select[name="kontgrp"]').select2({
+        var kontgrp = $('select[name="kontgrp"]').select2({
             data: data,
             minimumInputLength: 2
+        });
+        {% if group is defined %}
+            kontgrp.val('{{ group.id }}').change();
+        {% endif %}
+        kontgrp.change(function () {
+            this.form.submit();
         });
     </script>
 {% endblock %}

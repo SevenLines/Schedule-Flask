@@ -25,13 +25,12 @@ class Kontkurs(db.Model):
     syear = db.Column(db.Integer)
 
     groupslist = db.relationship('Kontgrp', backref='kontkurs', lazy='dynamic')
-
+    # kontlist = db.relationship('Kontlist', backref='kontkurs', lazy='dynamic')
     def __str__(self, *args, **kwargs):
         return "<Kontkurs: {}>".format(self.title.strip())
 
     def __repr__(self):
         return str(self)
-
 
 class Kontgrp(db.Model):
     id = db.Column('id_7', db.Integer, primary_key=True)
@@ -51,11 +50,24 @@ class Kontgrp(db.Model):
         return str(self)
 
 
+class Kontlist(db.Model):
+    id = db.Column('id_ 9', db.Integer, primary_key=True)
+    op = db.Column(db.Integer, db.ForeignKey('raspnagr.op'))
+    kontkurs_id = db.Column("kont", db.Integer, db.ForeignKey('kontkurs.id_1'))
+
+
+class Kontgrplist(db.Model):
+    id = db.Column('id_ 9', db.Integer, primary_key=True)
+    op = db.Column(db.Integer, db.ForeignKey('raspnagr.op'))
+    kontgrp_id = db.Column("kontid", db.Integer, db.ForeignKey('kontgrp.id_7'))
+
+
 class Raspnagr(db.Model):
     id = db.Column('id_51', db.Integer, primary_key=True)
     kontkurs_id = db.Column("kont", db.Integer, db.ForeignKey('kontkurs.id_1'))
     kontgrp_id = db.Column("kontid", db.Integer, db.ForeignKey('kontgrp.id_7'))
-    op = db.Column(db.Integer)
+    op = db.Column("op", db.Integer)
+    # op_grp = db.Column("op", db.Integer)
     nt = db.Column(db.Integer, db.ForeignKey("normtime.id_40"))
     sem = db.Column(db.Integer)
     pred_id = db.Column("pred", db.Integer, db.ForeignKey("vacpred.id_15"))
@@ -80,6 +92,8 @@ class Raspnagr(db.Model):
     syear = db.Column(db.Integer)
 
     raspis = db.relationship('Raspis', backref='raspnagr', lazy='dynamic')
+    kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='dynamic')
+    kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='dynamic')
 
     @classmethod
     def get_for_kontgrp(self, kontgrp):
@@ -118,6 +132,7 @@ class Auditory(db.Model):
         return str(self)
 
     raspnagr = db.relationship('Raspnagr', backref='auditory', lazy='dynamic')
+    raspis = db.relationship('Raspis', backref='auditory', lazy='dynamic')
 
 
 class Discipline(db.Model):
@@ -166,16 +181,21 @@ class Raspis(db.Model):
     day = db.Column(db.SmallInteger)
     para = db.Column(db.SmallInteger)
     kol_par = db.Column(db.SmallInteger)
-    aud = db.Column(db.Integer, db.ForeignKey('id_60'))
+    aud_id = db.Column("aud", db.Integer, db.ForeignKey('auditories.id_60'))
     n_zan = db.Column(db.Integer)
     num_zant = db.Column(db.Integer)
     insdate = db.Column(db.DateTime)
 
-
     @classmethod
     def get_for_kontgrp(self, kontgrp):
-        raspis = Raspis.query.filter(
-            or_(Raspis.raspnagr.has(kontkurs_id=kontgrp.kont_id), Raspis.raspnagr.has(kontgrp_id=kontgrp.id))
+        raspis = Raspis.query.outerjoin().filter(
+            or_(
+                Raspis.raspnagr.has(kontkurs_id=kontgrp.kont_id),
+                Raspis.raspnagr.has(kontgrp_id=kontgrp.id),
+                Raspis.raspnagr.has(Raspnagr.kontlist.any(kontkurs_id=kontgrp.kont_id)),
+                Raspis.raspnagr.has(Raspnagr.kontgrplist.any(kontgrp_id=kontgrp.id)),
+                # Raspis.raspnagr.kontlist.has(kontgrp_id=kontgrp.id),
+            )
         ).order_by(Raspis.day, Raspis.para)
 
         return raspis

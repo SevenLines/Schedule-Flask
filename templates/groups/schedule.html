@@ -21,7 +21,7 @@
                                     <span class="discipline">{{ lesson_every.raspnagr.discipline.title }}</span>
                                     <br>
                                     <span class="teacher">{{ lesson_every.raspnagr.teacher.name }}</span>
-                                    <span class="auditory">{{ lesson_every.raspnagr.auditory.title }}</span>
+                                    <span class="auditory">{{ lesson_every.auditory.title }}</span>
                                 </div>
                             {% elif lesson_odd or lesson_even %}
                                 <table class="lesson-table">
@@ -32,7 +32,7 @@
                                                     <span class="discipline">{{ lesson_odd.raspnagr.discipline.title }}</span>
                                                     <br>
                                                     <span class="teacher">{{ lesson_odd.raspnagr.teacher.name }}</span>
-                                                    <span class="auditory">{{ lesson_odd.raspnagr.auditory.title }}</span>
+                                                    <span class="auditory">{{ lesson_odd.auditory.title }}</span>
                                                 {% endif %}
                                             </div>
                                         </td>
@@ -44,7 +44,7 @@
                                                     <span class="discipline">{{ lesson_even.raspnagr.discipline.title }}</span>
                                                     <br>
                                                     <span class="teacher">{{ lesson_even.raspnagr.teacher.name }}</span>
-                                                    <span class="auditory">{{ lesson_even.raspnagr.auditory.title }}</span>
+                                                    <span class="auditory">{{ lesson_even.auditory.title }}</span>
                                                 {% endif %}
                                             </div>
                                         </td>
