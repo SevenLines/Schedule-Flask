@@ -27,19 +27,24 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                </ul>
                 <form class="navbar-form navbar-left" method="post" action="{{ url_for("group_schedule_redirect") }}">
                     <div class="form-group">
                         <select class="form-control" name="kontgrp"></select>
                     </div>
-                    <button type="submit" class="btn btn-default">Открыть</button>
+                </form>
+                <form class="navbar-form navbar-left" method="post"
+                      action="{{ url_for("auditory_schedule_redirect") }}">
+                    <div class="form-group">
+                        <select class="form-control" name="auditory"></select>
+                    </div>
                 </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
-    {% block body %}
-    {% endblock %}
+    <div class="content" style="margin-bottom: 50px">
+        {% block body %}
+        {% endblock %}
+    </div>
 </div>
 
 {% block scripts %}
@@ -47,15 +52,23 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/select2.min.js') }}"></script>
     <script>
-        var data = JSON.parse('{{ groups_json|safe }}');
+        var data_groups = JSON.parse('{{ groups_json|safe }}');
+        var auditory_groups = JSON.parse('{{ auditories_json|safe }}');
         var kontgrp = $('select[name="kontgrp"]').select2({
-            data: data,
+            data: data_groups,
+            minimumInputLength: 2
+        });
+        var auditory = $('select[name="auditory"]').select2({
+            data: auditory_groups,
             minimumInputLength: 2
         });
         {% if group is defined %}
             kontgrp.val('{{ group.id }}').change();
         {% endif %}
-        kontgrp.change(function () {
+        {% if auditory is defined %}
+            auditory.val('{{ auditory.id }}').change();
+        {% endif %}
+        $('select').change(function () {
             this.form.submit();
         });
     </script>

@@ -188,14 +188,23 @@ class Raspis(db.Model):
 
     @classmethod
     def get_for_kontgrp(self, kontgrp):
-        raspis = Raspis.query.outerjoin().filter(
+        raspis = Raspis.query.filter(
             or_(
                 Raspis.raspnagr.has(kontkurs_id=kontgrp.kont_id),
                 Raspis.raspnagr.has(kontgrp_id=kontgrp.id),
                 Raspis.raspnagr.has(Raspnagr.kontlist.any(kontkurs_id=kontgrp.kont_id)),
                 Raspis.raspnagr.has(Raspnagr.kontgrplist.any(kontgrp_id=kontgrp.id)),
-                # Raspis.raspnagr.kontlist.has(kontgrp_id=kontgrp.id),
             )
         ).order_by(Raspis.day, Raspis.para)
 
         return raspis
+
+    @classmethod
+    def get_for_auditory(cls, auditory):
+        raspis = Raspis.query.filter(
+            Raspis.aud_id==auditory.id
+        ).order_by(Raspis.day, Raspis.para)
+
+        return raspis
+
+
