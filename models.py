@@ -91,7 +91,7 @@ class Raspnagr(db.Model):
     hy2 = db.Column(db.Integer)
     syear = db.Column(db.Integer)
 
-    raspis = db.relationship('Raspis', backref='raspnagr', lazy='dynamic')
+    raspis = db.relationship('Raspis', backref=db.backref('raspnagr', lazy='joined'), lazy='dynamic')
     kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='dynamic')
     kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='dynamic')
 
@@ -131,8 +131,8 @@ class Auditory(db.Model):
     def __repr__(self):
         return str(self)
 
-    raspnagr = db.relationship('Raspnagr', backref='auditory', lazy='dynamic')
-    raspis = db.relationship('Raspis', backref='auditory', lazy='dynamic')
+    raspnagr = db.relationship('Raspnagr', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')
+    raspis = db.relationship('Raspis', backref=db.backref('auditory', lazy='joined'), lazy='dynamic')
 
 
 class Discipline(db.Model):
@@ -141,7 +141,7 @@ class Discipline(db.Model):
     title = db.Column("pred", db.String(250))
     titles = db.Column("preds", db.String(250))
 
-    raspnagr = db.relationship('Raspnagr', backref='discipline', lazy='dynamic')
+    raspnagr = db.relationship('Raspnagr', backref=db.backref('discipline', lazy='joined'), lazy='dynamic')
 
 
 class Teacher(db.Model):
@@ -150,7 +150,7 @@ class Teacher(db.Model):
     full_name = db.Column('prep', db.String(100))
     name = db.Column('preps', db.String(50))
 
-    raspnagr = db.relationship('Raspnagr', backref='teacher', lazy='dynamic')
+    raspnagr = db.relationship('Raspnagr', backref=db.backref('teacher', lazy='joined'), lazy='dynamic')
 
 
 class Faculty(db.Model):
@@ -207,4 +207,13 @@ class Raspis(db.Model):
 
         return raspis
 
+    @classmethod
+    def get_for_teacher(cls, teacher):
+        raspis = Raspis.query.filter(
+            or_(
+                Raspis.raspnagr.has(prep_id=teacher.id),
+            )
+        ).order_by(Raspis.day, Raspis.para)
+
+        return raspis
 

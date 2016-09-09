@@ -1,4 +1,5 @@
 from flask import Flask
+from flask.ext.debugtoolbar import DebugToolbarExtension
 from flask_sqlalchemy import SQLAlchemy
 
 from jinja_filters import *
@@ -10,5 +11,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.jinja_env.filters['dayofweek'] = dayofweek
 app.jinja_env.filters['parainfo'] = parainfo
+app.config['SECRET_KEY'] = 'ajkshedo mi1u02 301h2eih1 890yashkldj'
 
 db = SQLAlchemy(app)
+
+app.debug = True
+toolbar = DebugToolbarExtension(app)

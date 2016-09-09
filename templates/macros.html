@@ -1,0 +1,16 @@
+{% macro lesson_tags(lesson) %}
+    {% if lesson %}
+        <span class="discipline">{{ lesson.raspnagr.discipline.title }}</span>
+        <br>
+        <span class="teacher">
+            <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
+                {{ lesson.raspnagr.teacher.name }}
+            </a>
+        </span>
+        <span class="auditory">
+            <a href="{{ url_for("auditory_schedule", auditory_id=lesson.auditory.id) }}">
+                {{ lesson.auditory.title }}
+            </a>
+        </span>
+    {% endif %}
+{% endmacro %}
