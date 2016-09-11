@@ -6,6 +6,7 @@ table.schedule {
     & > td, th {
       width: 16%;
       border: 1px solid silver;
+      position: relative;
 
       div {
         position: relative;
@@ -60,14 +61,14 @@ table.schedule {
       }
     }
     .groups {
-        a {
-          white-space: nowrap;
-          text-decoration: underline;
-          &:hover {
-            background-color: yellow;
-          }
-          margin-right: 0.25em;
+      a {
+        white-space: nowrap;
+        text-decoration: underline;
+        &:hover {
+          background-color: yellow;
         }
+        margin-right: 0.25em;
+      }
     }
     .auditory {
       a {
@@ -82,20 +83,36 @@ table.schedule {
     min-height: 30px;
     background: white;
     &.empty {
-      //background: #eeeeee;
-      background-image: url("images/empty.png");
-      background-repeat: repeat-x;
+      height: 100%;
+      background-color: #eee;
     }
 
     &.odd {
       top: 0;
       border-bottom: 1px dashed black;
-      &.empty {
-        background-position: bottom;
-      }
     }
     &.even {
       bottom: 0;
+    }
+  }
+
+  .cell-back {
+    &.empty {
+      background-color: #eee;
+    }
+    &.odd {
+      position: absolute;
+      top: 1px;
+      left: -1px;
+      right: 1px;
+      bottom: 50%;
+    }
+    &.even {
+      position: absolute;
+      top: 50%;
+      bottom: -1px;
+      left: -1px;
+      right: 1px;
     }
   }
 }

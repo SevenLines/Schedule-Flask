@@ -4,11 +4,4 @@
 {% endblock %}
 {% block scripts %}
     {{ super() }}
-    <script type="text/javascript">
-{#        var data = JSON.parse('{{ groups_json|safe }}');#}
-{#        $('select[name="kontgrp"]').select2({#}
-{#            data: data,#}
-{#            minimumInputLength: 2#}
-{#        }).val('{{ group.id }}').change();#}
-    </script>
 {% endblock %}

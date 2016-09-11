@@ -22,22 +22,15 @@
                                     {{ macros.lesson_tags(lessons_every) }}
                                 </div>
                             {% elif lessons_odd or lessons_even %}
-                                <table class="lesson-table">
-                                    <tr>
-                                        <td>
-                                            <div class="lesson odd {% if not lessons_odd %}empty{% endif %}">
-                                                {{ macros.lesson_tags(lessons_odd) }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="lesson even {% if not lessons_even %}empty{% endif %}">
-                                                {{ macros.lesson_tags(lessons_even) }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="cell-back odd {% if not lessons_odd %}empty{% endif %}"></div>
+                                <div class="cell-back even {% if not lessons_even %}empty{% endif %}"></div>
+                                <div class="lesson odd {% if not lessons_odd %}empty{% endif %}">
+                                    {{ macros.lesson_tags(lessons_odd) }}
+                                </div>
+                                <div class="lesson even {% if not lessons_even %}empty{% endif %}">
+                                    {{ macros.lesson_tags(lessons_even) }}
+                                </div>
+
                             {% endif %}
                         </td>
                     {% endif %}

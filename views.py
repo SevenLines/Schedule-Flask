@@ -1,4 +1,6 @@
 import json
+
+import flask
 from flask.helpers import url_for
 from itertools import groupby
 
@@ -39,6 +41,9 @@ def auditory_schedule(auditory_id):
     auditory = Auditory.query.get(auditory_id)
     schedule = Raspis.get_for_auditory(auditory)
 
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
     return render_template_schedule("groups/schedule.html", **{
         "auditory": auditory,
         "schedule": schedule
@@ -54,6 +59,9 @@ def group_schedule(kont_id):
         group = Kontkurs.query.get(kont_id)
         schedule = Raspis.get_for_kontkurs(group)
 
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
     return render_template_schedule("groups/schedule.html", **{
         "group": group,
         "schedule": schedule
@@ -65,6 +73,9 @@ def teacher_schedule(teacher_id):
     teacher = Teacher.query.get(teacher_id)
     schedule = Raspis.get_for_teacher(teacher)
 
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
     return render_template_schedule("groups/schedule.html", **{
         "teacher": teacher,
         "schedule": schedule
@@ -75,6 +86,9 @@ def teacher_schedule(teacher_id):
 def discipline_schedule(discipline_id):
     discipline = Discipline.query.get(discipline_id)
     schedule = Raspis.get_for_discipline(discipline)
+
+    if request.is_xhr:
+        return flask.jsonify(schedule)
 
     return render_template_schedule("groups/schedule.html", **{
         "discipline": discipline,

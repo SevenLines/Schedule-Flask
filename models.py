@@ -26,8 +26,8 @@ class Kontkurs(db.Model):
     syear = db.Column(db.Integer)
 
     groupslist = db.relationship('Kontgrp', backref='kontkurs', lazy='joined')
-    kontlist = db.relationship('Kontlist', backref='kontkurs', lazy='subquery')
-    raspnagr = db.relationship("Raspnagr", backref=db.backref('kontkurs', lazy='joined'))
+    kontlist = db.relationship('Kontlist', backref='kontkurs', lazy='select')
+    raspnagr = db.relationship("Raspnagr", backref=db.backref('kontkurs', lazy='select'))
 
     def __str__(self, *args, **kwargs):
         return "<Kontkurs: {}>".format(self.title.strip())
@@ -47,9 +47,9 @@ class Kontgrp(db.Model):
     budzh = db.Column(db.Integer)
     spclntion = db.Column(db.Integer)
 
-    op = db.relationship("Kontgrplist", backref="kontgrp", lazy='joined')
+    op = db.relationship("Kontgrplist", backref=db.backref("kontgrp", lazy="joined"), lazy='joined')
     raspnagr = db.relationship("Raspnagr", backref=db.backref('kontgrp', lazy='joined'))
-    children = db.relationship("Kontgrp", backref=db.backref('parent', remote_side=[id]))
+    children = db.relationship("Kontgrp", backref=db.backref('parent', remote_side=[id], lazy="joined"))
 
     def __str__(self, *args, **kwargs):
         return "<Kontgrp: {}>".format(self.title.strip())
@@ -99,8 +99,8 @@ class Raspnagr(db.Model):
     syear = db.Column(db.Integer)
 
     raspis = db.relationship('Raspis', backref=db.backref('raspnagr', lazy='joined'), lazy='dynamic')
-    kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='joined')
-    kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='joined')
+    kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='subquery')
+    kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='subquery')
 
     @classmethod
     def get_for_kontgrp(self, kontgrp):

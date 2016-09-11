@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://disp:d7i7s7p@DATASCHEDULE'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.jinja_env.filters['dayofweek'] = dayofweek
 app.jinja_env.filters['parainfo'] = parainfo
@@ -16,5 +16,5 @@ app.config['SECRET_KEY'] = 'ajkshedo mi1u02 301h2eih1 890yashkldj'
 
 db = SQLAlchemy(app)
 
-app.debug = False
+app.debug = True
 toolbar = DebugToolbarExtension(app)
