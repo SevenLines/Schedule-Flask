@@ -82,12 +82,17 @@ table.schedule {
     min-height: 30px;
     background: white;
     &.empty {
-      background: #eeeeee;
+      //background: #eeeeee;
+      background-image: url("images/empty.png");
+      background-repeat: repeat-x;
     }
 
     &.odd {
       top: 0;
       border-bottom: 1px dashed black;
+      &.empty {
+        background-position: bottom;
+      }
     }
     &.even {
       bottom: 0;

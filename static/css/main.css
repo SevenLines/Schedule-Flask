@@ -54,10 +54,13 @@ table.schedule {
       table.schedule .lesson .auditory a:hover {
         background-color: yellow; }
     table.schedule .lesson.empty {
-      background: #eeeeee; }
+      background-image: url("images/empty.png");
+      background-repeat: repeat-x; }
     table.schedule .lesson.odd {
       top: 0;
       border-bottom: 1px dashed black; }
+      table.schedule .lesson.odd.empty {
+        background-position: bottom; }
     table.schedule .lesson.even {
       bottom: 0; }
 
