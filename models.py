@@ -1,4 +1,5 @@
-from sqlalchemy.sql.expression import or_
+from sqlalchemy.orm.util import aliased
+from sqlalchemy.sql.expression import or_, and_
 
 from base import db
 
@@ -24,13 +25,16 @@ class Kontkurs(db.Model):
     ntcgraph = db.Column(db.SmallInteger)
     syear = db.Column(db.Integer)
 
-    groupslist = db.relationship('Kontgrp', backref='kontkurs', lazy='dynamic')
-    # kontlist = db.relationship('Kontlist', backref='kontkurs', lazy='dynamic')
+    groupslist = db.relationship('Kontgrp', backref='kontkurs', lazy='joined')
+    kontlist = db.relationship('Kontlist', backref='kontkurs', lazy='subquery')
+    raspnagr = db.relationship("Raspnagr", backref=db.backref('kontkurs', lazy='joined'))
+
     def __str__(self, *args, **kwargs):
         return "<Kontkurs: {}>".format(self.title.strip())
 
     def __repr__(self):
         return str(self)
+
 
 class Kontgrp(db.Model):
     id = db.Column('id_7', db.Integer, primary_key=True)
@@ -38,10 +42,14 @@ class Kontgrp(db.Model):
     title = db.Column("obozn", db.String(20))
     ngroup = db.Column(db.Integer)
     students = db.Column(db.Integer)
-    parent = db.Column(db.Integer)
+    parent_id = db.Column("parent", db.Integer, db.ForeignKey('kontgrp.id_7'))
     depth = db.Column(db.Integer)
     budzh = db.Column(db.Integer)
     spclntion = db.Column(db.Integer)
+
+    op = db.relationship("Kontgrplist", backref="kontgrp", lazy='joined')
+    raspnagr = db.relationship("Raspnagr", backref=db.backref('kontgrp', lazy='joined'))
+    children = db.relationship("Kontgrp", backref=db.backref('parent', remote_side=[id]))
 
     def __str__(self, *args, **kwargs):
         return "<Kontgrp: {}>".format(self.title.strip())
@@ -51,13 +59,13 @@ class Kontgrp(db.Model):
 
 
 class Kontlist(db.Model):
-    id = db.Column('id_ 9', db.Integer, primary_key=True)
+    id = db.Column('id_9', db.Integer, primary_key=True)
     op = db.Column(db.Integer, db.ForeignKey('raspnagr.op'))
     kontkurs_id = db.Column("kont", db.Integer, db.ForeignKey('kontkurs.id_1'))
 
 
 class Kontgrplist(db.Model):
-    id = db.Column('id_ 9', db.Integer, primary_key=True)
+    id = db.Column('id_', db.Integer, primary_key=True)
     op = db.Column(db.Integer, db.ForeignKey('raspnagr.op'))
     kontgrp_id = db.Column("kontid", db.Integer, db.ForeignKey('kontgrp.id_7'))
 
@@ -67,7 +75,6 @@ class Raspnagr(db.Model):
     kontkurs_id = db.Column("kont", db.Integer, db.ForeignKey('kontkurs.id_1'))
     kontgrp_id = db.Column("kontid", db.Integer, db.ForeignKey('kontgrp.id_7'))
     op = db.Column("op", db.Integer)
-    # op_grp = db.Column("op", db.Integer)
     nt = db.Column(db.Integer, db.ForeignKey("normtime.id_40"))
     sem = db.Column(db.Integer)
     pred_id = db.Column("pred", db.Integer, db.ForeignKey("vacpred.id_15"))
@@ -92,13 +99,13 @@ class Raspnagr(db.Model):
     syear = db.Column(db.Integer)
 
     raspis = db.relationship('Raspis', backref=db.backref('raspnagr', lazy='joined'), lazy='dynamic')
-    kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='dynamic')
-    kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='dynamic')
+    kontlist = db.relationship('Kontlist', backref='raspnagr', lazy='joined')
+    kontgrplist = db.relationship('Kontgrplist', backref='raspnagr', lazy='joined')
 
     @classmethod
     def get_for_kontgrp(self, kontgrp):
         raspnagrs = Raspnagr.query.filter(
-            or_(Raspnagr.kontgrp_id==kontgrp.id, Raspnagr.kontkurs_id==kontgrp.kont_id)
+            or_(Raspnagr.kontgrp_id == kontgrp.id, Raspnagr.kontkurs_id == kontgrp.kont_id)
         )
         return raspnagrs
 
@@ -187,25 +194,89 @@ class Raspis(db.Model):
     insdate = db.Column(db.DateTime)
 
     @classmethod
-    def get_for_kontgrp(self, kontgrp):
+    def _get_table(cls, rows):
+        schedule = {
+            para: {
+                day: {
+                    'everyweek': [],
+                    'odd': [],
+                    'even': [],
+                } for day in [1, 2, 3, 4, 5, 6]
+                } for para in [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            }
+
+        for lesson in rows.order_by(Raspis.day, Raspis.para):
+            setattr(lesson, 'groups', [])
+
+            if lesson.raspnagr.kontgrp:
+                lesson.groups = [lesson.raspnagr.kontgrp, ]
+            elif lesson.raspnagr.kontkurs:
+                lesson.groups = [lesson.raspnagr.kontkurs, ]
+            elif lesson.raspnagr.kontgrplist:
+                lesson.groups = [i.kontgrp for i in lesson.raspnagr.kontgrplist]
+            elif lesson.raspnagr.kontlist:
+                lesson.groups = [i.kontkurs for i in lesson.raspnagr.kontlist]
+
+            if lesson.everyweek == 1:
+                if lesson.day > 7:
+                    week = 'even'
+                else:
+                    week = 'odd'
+            else:
+                week = 'everyweek'
+
+            schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].append(lesson)
+        return schedule
+
+    @classmethod
+    def get_for_kontgrp(cls, kontgrp):
         raspis = Raspis.query.filter(
             or_(
-                Raspis.raspnagr.has(kontkurs_id=kontgrp.kont_id),
+                Raspis.raspnagr.has(and_(
+                    Raspnagr.kontgrp_id==None,
+                    Raspnagr.kontkurs_id==kontgrp.kont_id
+                )),
                 Raspis.raspnagr.has(kontgrp_id=kontgrp.id),
+                Raspis.raspnagr.has(and_(
+                    Raspnagr.kontgrp.has(kont_id=kontgrp.kont_id),
+                    Raspnagr.kontgrp.has(Kontgrp.depth<kontgrp.depth),
+                    Raspnagr.kontgrp.has(Kontgrp.ngroup==kontgrp.ngroup),
+                )),
                 Raspis.raspnagr.has(Raspnagr.kontlist.any(kontkurs_id=kontgrp.kont_id)),
                 Raspis.raspnagr.has(Raspnagr.kontgrplist.any(kontgrp_id=kontgrp.id)),
             )
-        ).order_by(Raspis.day, Raspis.para)
+        )
 
-        return raspis
+        return cls._get_table(raspis)
+
+    @classmethod
+    def get_for_kontkurs(cls, kontkurs):
+        Kontgrp2 = aliased(Kontgrp)
+        Kontkurs2 = aliased(Kontkurs)
+        raspis = Raspis.query \
+            .join(Raspnagr) \
+            .outerjoin(Kontgrp, Raspnagr.kontgrp_id==Kontgrp.id) \
+            .outerjoin(Kontgrplist, Kontgrplist.op==Raspnagr.op) \
+            .outerjoin(Kontlist, Kontlist.op==Raspnagr.op) \
+            .outerjoin(Kontgrp2, Kontgrp2.id==Kontgrplist.kontgrp_id) \
+            .outerjoin(Kontkurs2, Kontkurs2.id==Kontlist.kontkurs_id) \
+            .filter(
+            or_(
+                Raspnagr.kontkurs_id == kontkurs.id,
+                Kontgrp.kont_id == kontkurs.id,
+                Kontgrp2.kont_id == kontkurs.id,
+                Kontkurs2.id == kontkurs.id,
+            ))
+
+        return cls._get_table(raspis)
 
     @classmethod
     def get_for_auditory(cls, auditory):
         raspis = Raspis.query.filter(
-            Raspis.aud_id==auditory.id
-        ).order_by(Raspis.day, Raspis.para)
+            Raspis.aud_id == auditory.id
+        )
 
-        return raspis
+        return cls._get_table(raspis)
 
     @classmethod
     def get_for_teacher(cls, teacher):
@@ -213,7 +284,16 @@ class Raspis(db.Model):
             or_(
                 Raspis.raspnagr.has(prep_id=teacher.id),
             )
-        ).order_by(Raspis.day, Raspis.para)
+        )
 
-        return raspis
+        return cls._get_table(raspis)
 
+    @classmethod
+    def get_for_discipline(cls, discipline):
+        raspis = Raspis.query.filter(
+            or_(
+                Raspis.raspnagr.has(pred_id=discipline.id),
+            )
+        )
+
+        return cls._get_table(raspis)

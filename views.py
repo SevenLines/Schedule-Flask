@@ -13,8 +13,6 @@ from models import *
 
 @app.route("/")
 def index():
-    print(Kontkurs.query.all())
-    print(Auditory.query.all())
     return render_template_schedule("index.html")
 
 
@@ -23,36 +21,17 @@ def group_schedule_redirect():
     kontgrp = request.form['kontgrp']
     return redirect(url_for("group_schedule", kont_id=kontgrp))
 
+
 @app.route("/auditory/schedule/", methods=['POST'])
 def auditory_schedule_redirect():
     auditory = request.form['auditory']
     return redirect(url_for("auditory_schedule", auditory_id=auditory))
 
+
 @app.route("/auditory/<auditory_id>/schedule/")
 def auditory_schedule(auditory_id):
     auditory = Auditory.query.get(auditory_id)
-    raspis = Raspis.get_for_auditory(auditory)
-
-    schedule = {
-        para: {
-            day: {
-                'everyweek': None,
-                'odd': None,
-                'even': None,
-            } for day in [1, 2, 3, 4, 5, 6]
-            } for para in [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        }
-
-    for lesson in raspis:
-        if lesson.everyweek == 1:
-            if lesson.day > 7:
-                week = 'even'
-            else:
-                week = 'odd'
-        else:
-            week = 'everyweek'
-
-        schedule[lesson.para][(lesson.day - 1) % 7 + 1][week] = lesson
+    schedule = Raspis.get_for_auditory(auditory)
 
     return render_template_schedule("groups/schedule.html", **{
         "auditory": auditory,
@@ -63,28 +42,11 @@ def auditory_schedule(auditory_id):
 @app.route("/group/<kont_id>/schedule/")
 def group_schedule(kont_id):
     group = Kontgrp.query.get(kont_id)
-    raspis = Raspis.get_for_kontgrp(group)
-
-    schedule = {
-        para: {
-            day: {
-                'everyweek': None,
-                'odd': None,
-                'even': None,
-            } for day in [1, 2, 3, 4, 5, 6]
-            } for para in [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        }
-
-    for lesson in raspis:
-        if lesson.everyweek == 1:
-            if lesson.day > 7:
-                week = 'even'
-            else:
-                week = 'odd'
-        else:
-            week = 'everyweek'
-
-        schedule[lesson.para][(lesson.day - 1) % 7 + 1][week] = lesson
+    if group:
+        schedule = Raspis.get_for_kontgrp(group)
+    else:
+        group = Kontkurs.query.get(kont_id)
+        schedule = Raspis.get_for_kontkurs(group)
 
     return render_template_schedule("groups/schedule.html", **{
         "group": group,
@@ -95,30 +57,20 @@ def group_schedule(kont_id):
 @app.route("/teacher/<teacher_id>/schedule/")
 def teacher_schedule(teacher_id):
     teacher = Teacher.query.get(teacher_id)
-    raspis = Raspis.get_for_teacher(teacher)
-
-    schedule = {
-        para: {
-            day: {
-                'everyweek': None,
-                'odd': None,
-                'even': None,
-            } for day in [1, 2, 3, 4, 5, 6]
-            } for para in [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        }
-
-    for lesson in raspis:
-        if lesson.everyweek == 1:
-            if lesson.day > 7:
-                week = 'even'
-            else:
-                week = 'odd'
-        else:
-            week = 'everyweek'
-
-        schedule[lesson.para][(lesson.day - 1) % 7 + 1][week] = lesson
+    schedule = Raspis.get_for_teacher(teacher)
 
     return render_template_schedule("groups/schedule.html", **{
         "teacher": teacher,
+        "schedule": schedule
+    })
+
+
+@app.route("/discpipline/<discipline_id>/schedule/")
+def discipline_schedule(discipline_id):
+    discipline = Discipline.query.get(discipline_id)
+    schedule = Raspis.get_for_discipline(discipline)
+
+    return render_template_schedule("groups/schedule.html", **{
+        "discipline": discipline,
         "schedule": schedule
     })

@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://disp:d7i7s7p@DATASCHEDULE'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.jinja_env.filters['dayofweek'] = dayofweek
 app.jinja_env.filters['parainfo'] = parainfo

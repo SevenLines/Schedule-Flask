@@ -25,8 +25,28 @@ table.schedule {
     background: white; }
     table.schedule .lesson .discipline {
       font-weight: bold; }
-    table.schedule .lesson .teacher {
-      color: #9C1A1C; }
+      table.schedule .lesson .discipline a {
+        color: #070e1d;
+        text-decoration: underline; }
+        table.schedule .lesson .discipline a:hover {
+          background-color: yellow; }
+    table.schedule .lesson .teacher a {
+      color: #9C1A1C;
+      text-decoration: underline;
+      margin-right: 0.25em; }
+      table.schedule .lesson .teacher a:hover {
+        background-color: yellow; }
+    table.schedule .lesson .groups a {
+      white-space: nowrap;
+      text-decoration: underline;
+      margin-right: 0.25em; }
+      table.schedule .lesson .groups a:hover {
+        background-color: yellow; }
+    table.schedule .lesson .auditory a {
+      color: #0f9c7b;
+      text-decoration: underline; }
+      table.schedule .lesson .auditory a:hover {
+        background-color: yellow; }
     table.schedule .lesson.empty {
       background: #eeeeee; }
     table.schedule .lesson.odd {
