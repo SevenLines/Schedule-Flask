@@ -226,6 +226,7 @@ class Raspis(db.Model):
                 week = 'everyweek'
 
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].append(lesson)
+            schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].sort(key=lambda l: l.groups[0].title)
         return schedule
 
     @classmethod
@@ -233,14 +234,25 @@ class Raspis(db.Model):
         raspis = Raspis.query.filter(
             or_(
                 Raspis.raspnagr.has(and_(
-                    Raspnagr.kontgrp_id==None,
-                    Raspnagr.kontkurs_id==kontgrp.kont_id
+                    Raspnagr.kontgrp_id == 0,
+                    Raspnagr.kontkurs_id == kontgrp.kont_id
                 )),
                 Raspis.raspnagr.has(kontgrp_id=kontgrp.id),
                 Raspis.raspnagr.has(and_(
                     Raspnagr.kontgrp.has(kont_id=kontgrp.kont_id),
-                    Raspnagr.kontgrp.has(Kontgrp.depth<kontgrp.depth),
-                    Raspnagr.kontgrp.has(Kontgrp.ngroup==kontgrp.ngroup),
+                    Raspnagr.kontgrp.has(or_(
+                        and_(
+                            Kontgrp.depth < kontgrp.depth,
+                            or_(
+                                Kontgrp.id == kontgrp.parent_id,
+                                Kontgrp.children.any(id=kontgrp.parent_id),
+                            ),
+                        ),
+                        and_(
+                            Kontgrp.depth > kontgrp.depth,
+                            Kontgrp.parent_id==kontgrp.id,
+                        )
+                    )),
                 )),
                 Raspis.raspnagr.has(Raspnagr.kontlist.any(kontkurs_id=kontgrp.kont_id)),
                 Raspis.raspnagr.has(Raspnagr.kontgrplist.any(kontgrp_id=kontgrp.id)),
@@ -255,11 +267,11 @@ class Raspis(db.Model):
         Kontkurs2 = aliased(Kontkurs)
         raspis = Raspis.query \
             .join(Raspnagr) \
-            .outerjoin(Kontgrp, Raspnagr.kontgrp_id==Kontgrp.id) \
-            .outerjoin(Kontgrplist, Kontgrplist.op==Raspnagr.op) \
-            .outerjoin(Kontlist, Kontlist.op==Raspnagr.op) \
-            .outerjoin(Kontgrp2, Kontgrp2.id==Kontgrplist.kontgrp_id) \
-            .outerjoin(Kontkurs2, Kontkurs2.id==Kontlist.kontkurs_id) \
+            .outerjoin(Kontgrp, Raspnagr.kontgrp_id == Kontgrp.id) \
+            .outerjoin(Kontgrplist, Kontgrplist.op == Raspnagr.op) \
+            .outerjoin(Kontlist, Kontlist.op == Raspnagr.op) \
+            .outerjoin(Kontgrp2, Kontgrp2.id == Kontgrplist.kontgrp_id) \
+            .outerjoin(Kontkurs2, Kontkurs2.id == Kontlist.kontkurs_id) \
             .filter(
             or_(
                 Raspnagr.kontkurs_id == kontkurs.id,
