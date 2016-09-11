@@ -29,13 +29,22 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <form class="navbar-form navbar-left" method="post" action="{{ url_for("group_schedule_redirect") }}">
                     <div class="form-group">
+                        <label for="kontgrp">Группа</label>
                         <select class="form-control" name="kontgrp"></select>
                     </div>
                 </form>
                 <form class="navbar-form navbar-left" method="post"
                       action="{{ url_for("auditory_schedule_redirect") }}">
                     <div class="form-group">
+                        <label for="auditory">Аудитория</label>
                         <select class="form-control" name="auditory"></select>
+                    </div>
+                </form>
+                <form class="navbar-form navbar-left" method="post"
+                      action="{{ url_for("teacher_schedule_redirect") }}">
+                    <div class="form-group">
+                        <label for="teacher">Преподаватель</label>
+                        <select class="form-control" name="teacher"></select>
                     </div>
                 </form>
             </div><!-- /.navbar-collapse -->
@@ -54,6 +63,8 @@
     <script>
         var data_groups = JSON.parse('{{ groups_json|safe }}');
         var auditory_groups = JSON.parse('{{ auditories_json|safe }}');
+        var teacher_groups = JSON.parse('{{ teacher_json|safe }}');
+
         var kontgrp = $('select[name="kontgrp"]').select2({
             data: data_groups,
             minimumInputLength: 2
@@ -62,12 +73,21 @@
             data: auditory_groups,
             minimumInputLength: 2
         });
+        var teacher = $('select[name="teacher"]').select2({
+            data: teacher_groups,
+            minimumInputLength: 2
+        });
+
         {% if group is defined %}
             kontgrp.val('{{ group.id }}').change();
         {% endif %}
         {% if auditory is defined %}
             auditory.val('{{ auditory.id }}').change();
         {% endif %}
+        {% if teacher is defined %}
+            teacher.val('{{ teacher.id }}').change();
+        {% endif %}
+
         $('select').change(function () {
             this.form.submit();
         });

@@ -5,11 +5,14 @@
             <a href="{{ url_for("discipline_schedule", discipline_id=lesson.raspnagr.discipline.id) }}">
                 {{ lesson.raspnagr.discipline.title }}
             </a>
-        </span><br>
-            <span class="teacher">
-            <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
+        </span>
+            {% if lesson.raspnagr.teacher %}
+                <br>
+                <span class="teacher">
+                <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
                 {{ lesson.raspnagr.teacher.name }}
             </a>
+            {% endif %}
         </span>
             <span class="auditory">
             <a href="{{ url_for("auditory_schedule", auditory_id=lesson.auditory.id) }}">

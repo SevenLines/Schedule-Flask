@@ -28,6 +28,12 @@ def auditory_schedule_redirect():
     return redirect(url_for("auditory_schedule", auditory_id=auditory))
 
 
+@app.route("/teacher/schedule/", methods=['POST'])
+def teacher_schedule_redirect():
+    teacher = request.form['teacher']
+    return redirect(url_for("teacher_schedule", teacher_id=teacher))
+
+
 @app.route("/auditory/<auditory_id>/schedule/")
 def auditory_schedule(auditory_id):
     auditory = Auditory.query.get(auditory_id)

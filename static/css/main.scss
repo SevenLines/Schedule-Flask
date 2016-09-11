@@ -32,6 +32,13 @@ table.schedule {
 
   .lesson {
     padding: 0.25em;
+    a {
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+    }
     .discipline {
       font-weight: bold;
       a {
