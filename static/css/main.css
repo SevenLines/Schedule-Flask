@@ -21,9 +21,32 @@ table.schedule {
     table.schedule .lesson-table td {
       border: none; }
   table.schedule .lesson {
-    padding: 0.25em;
     min-height: 30px;
     background: white; }
+    table.schedule .lesson .lesson-info {
+      padding: 0.25em;
+      margin: 0.25em;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+      cursor: pointer; }
+      table.schedule .lesson .lesson-info.lect {
+        background-color: #ffccde;
+        border: 2px solid #ff99bd; }
+        table.schedule .lesson .lesson-info.lect:hover {
+          background-color: #ffe6ef; }
+      table.schedule .lesson .lesson-info.pract {
+        background-color: #b8e78f;
+        border: 2px solid #9dde65; }
+        table.schedule .lesson .lesson-info.pract:hover {
+          background-color: #c5eca4; }
+      table.schedule .lesson .lesson-info.lab {
+        background-color: #e7e581;
+        border: 2px solid #dfdc56; }
+        table.schedule .lesson .lesson-info.lab:hover {
+          background-color: #ebe996; }
     table.schedule .lesson a {
       -webkit-transition: all 0.2s;
       -moz-transition: all 0.2s;
@@ -31,12 +54,13 @@ table.schedule {
       -o-transition: all 0.2s;
       transition: all 0.2s; }
     table.schedule .lesson .discipline {
+      padding: 0.15em;
       font-weight: bold; }
       table.schedule .lesson .discipline a {
         color: #070e1d;
         text-decoration: underline; }
         table.schedule .lesson .discipline a:hover {
-          background-color: yellow; }
+          background-color: rgba(255, 255, 0, 0.75); }
     table.schedule .lesson .teacher a {
       color: #9C1A1C;
       text-decoration: underline;
@@ -56,13 +80,16 @@ table.schedule {
         background-color: yellow; }
     table.schedule .lesson.empty {
       height: 100%;
-      background-color: #eee; }
+      background-color: transparent; }
+      table.schedule .lesson.empty.even {
+        box-shadow: 0 4px 4px silver inset; }
     table.schedule .lesson.odd {
       top: 0;
-      border-bottom: 1px dashed black; }
+      border-bottom: 2px dashed silver; }
     table.schedule .lesson.even {
       bottom: 0; }
   table.schedule .cell-back.empty {
+    box-shadow: 0 4px 8px silver inset;
     background-color: #eee; }
   table.schedule .cell-back.odd {
     position: absolute;

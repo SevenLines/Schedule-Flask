@@ -57,9 +57,9 @@
 </div>
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='3rdparty/js/jquery-3.1.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='3rdparty/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='3rdparty/js/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/3rdparty/jquery-3.1.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/3rdparty/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/3rdparty/select2.min.js') }}"></script>
 
     <script>
         var data_groups = JSON.parse('{{ groups_json|safe }}');
@@ -93,8 +93,8 @@
             this.form.submit();
         });
     </script>
-    <script src="{{ url_for('static', filename='3rdparty/js/lodash.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='3rdparty/js/backbone-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/3rdparty/lodash.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/3rdparty/backbone-min.js') }}"></script>
 {% endblock %}
 </body>
 </html>

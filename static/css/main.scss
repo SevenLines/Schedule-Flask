@@ -32,7 +32,36 @@ table.schedule {
   }
 
   .lesson {
-    padding: 0.25em;
+    .lesson-info {
+      padding: 0.25em;
+      margin: 0.25em;
+
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s;
+      cursor: pointer;
+      
+      @mixin lesson-frame($color) {
+        background-color: $color;
+        border: 2px solid darken($color, 10);
+        &:hover {
+          background-color: lighten($color, 5);
+        }
+      }
+
+      &.lect {
+        @include lesson-frame(#ffccde);
+      }
+      &.pract {
+        @include lesson-frame(#b8e78f);
+      }
+      &.lab {
+        @include lesson-frame(#e7e581);
+      }
+    }
+
     a {
       -webkit-transition: all 0.2s;
       -moz-transition: all 0.2s;
@@ -41,14 +70,16 @@ table.schedule {
       transition: all 0.2s;
     }
     .discipline {
+      padding: 0.15em;
       font-weight: bold;
       a {
         color: #070e1d;
         text-decoration: underline;
         &:hover {
-          background-color: yellow;
+          background-color: rgba(255, 255, 0, 0.75);
         }
       }
+
     }
     .teacher {
       a {
@@ -84,12 +115,15 @@ table.schedule {
     background: white;
     &.empty {
       height: 100%;
-      background-color: #eee;
+      background-color: transparent;
+      &.even {
+        box-shadow: 0 4px 4px silver inset;
+      }
     }
 
     &.odd {
       top: 0;
-      border-bottom: 1px dashed black;
+      border-bottom: 2px dashed silver;
     }
     &.even {
       bottom: 0;
@@ -98,6 +132,7 @@ table.schedule {
 
   .cell-back {
     &.empty {
+      box-shadow: 0 4px 8px silver inset;
       background-color: #eee;
     }
     &.odd {

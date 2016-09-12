@@ -82,7 +82,7 @@ def teacher_schedule(teacher_id):
     })
 
 
-@app.route("/discpipline/<discipline_id>/schedule/")
+@app.route("/discipline/<discipline_id>/schedule/")
 def discipline_schedule(discipline_id):
     discipline = Discipline.query.get(discipline_id)
     schedule = Raspis.get_for_discipline(discipline)

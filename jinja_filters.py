@@ -8,6 +8,7 @@ def dayofweek(number):
         6: "Суббота",
     }.get(number, "")
 
+
 def parainfo(number):
     return {
         1: "08:15",
@@ -19,3 +20,11 @@ def parainfo(number):
         7: "18:40",
         8: "20:00",
     }.get(number, "")
+
+
+def lesson_type_class(nt):
+    return {
+        1: "lect",
+        2: "lab",
+        3: "pract",
+    }.get(nt)

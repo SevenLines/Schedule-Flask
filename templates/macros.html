@@ -1,28 +1,29 @@
 {% macro lesson_tags_inner(lesson) %}
-    <span class="discipline">
-        <a href="{{ url_for("discipline_schedule", discipline_id=lesson.raspnagr.discipline.id) }}">
-            {{ lesson.raspnagr.discipline.title }}
-        </a>
-    </span>
-    {% if lesson.raspnagr.teacher %}
-        <br>
-        <span class="teacher">
-            <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
-                {{ lesson.raspnagr.teacher.name }}
+    <div class="lesson-info {{ lesson.raspnagr.nt|lesson_type_class }}">
+        <div class="discipline">
+            <a href="{{ url_for("discipline_schedule", discipline_id=lesson.raspnagr.discipline.id) }}">
+                {{ lesson.raspnagr.discipline.title }}
+            </a>
+        </div>
+        {% if lesson.raspnagr.teacher %}
+            <span class="teacher">
+                <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
+                    {{ lesson.raspnagr.teacher.name }}
+                </a>
+            </span>
+        {% endif %}
+        <span class="auditory">
+            <a href="{{ url_for("auditory_schedule", auditory_id=lesson.auditory.id) }}">
+                {{ lesson.auditory.title }}
             </a>
         </span>
-    {% endif %}
-    <span class="auditory">
-        <a href="{{ url_for("auditory_schedule", auditory_id=lesson.auditory.id) }}">
-            {{ lesson.auditory.title }}
-        </a>
-    </span>
-    <div class="groups">
-        {% for g in lesson.groups %}
-            <a href="{{ url_for("group_schedule", kont_id=g.id) }}" class="item">
-                {{ g.title|replace("(И,О)", "") }}
-            </a>
-        {% endfor %}
+        <div class="groups">
+            {% for g in lesson.groups %}
+                <a href="{{ url_for("group_schedule", kont_id=g.id) }}" class="item">
+                    {{ g.title|replace("(И,О)", "") }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endmacro %}
 
