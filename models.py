@@ -172,6 +172,8 @@ class Chair(db.Model):
     title = db.Column("kaf", db.String(100))
     short_title = db.Column("sokr", db.String(10))
 
+    raspnagr = db.relationship('Raspnagr', backref=db.backref('chair', lazy='joined'), lazy='dynamic')
+
 
 class Normtime(db.Model):
     id = db.Column('id_40', db.Integer, primary_key=True)
@@ -228,6 +230,14 @@ class Raspis(db.Model):
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].append(lesson)
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].sort(key=lambda l: l.groups[0].title)
         return schedule
+
+    @classmethod
+    def get_for_chair(cls, chair):
+        raspis = Raspis.query.filter(
+            Raspis.raspnagr_id == chair.id
+        )
+
+        return cls._get_table(raspis)
 
     @classmethod
     def get_for_kontgrp(cls, kontgrp):
