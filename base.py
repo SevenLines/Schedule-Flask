@@ -13,6 +13,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.jinja_env.filters['dayofweek'] = dayofweek
 app.jinja_env.filters['parainfo'] = parainfo
 app.jinja_env.filters['lesson_type_class'] = lesson_type_class
+app.jinja_env.filters['is_list'] = is_list
 app.config['SECRET_KEY'] = 'ajkshedo mi1u02 301h2eih1 890yashkldj'
 
 db = SQLAlchemy(app)

@@ -94,3 +94,20 @@ def discipline_schedule(discipline_id):
         "discipline": discipline,
         "schedule": schedule
     })
+
+@app.route("/report/physical-education-schedule/")
+def physical_education_schedule():
+    """
+    расписание физической культуры
+    :return:
+    """
+    PHYSICAL_EDUCATION_CHAIR_ID = 218
+    chair = Chair.query.get(PHYSICAL_EDUCATION_CHAIR_ID)
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True)
+
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
+    return render_template_schedule("groups/schedule.html", **{
+        "schedule": schedule
+    })

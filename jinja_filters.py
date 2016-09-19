@@ -28,3 +28,7 @@ def lesson_type_class(nt):
         2: "lab",
         3: "pract",
     }.get(nt)
+
+
+def is_list(value):
+    return isinstance(value, list)

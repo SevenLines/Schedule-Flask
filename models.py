@@ -196,7 +196,7 @@ class Raspis(db.Model):
     insdate = db.Column(db.DateTime)
 
     @classmethod
-    def _get_table(cls, rows):
+    def _get_table(cls, rows, group_by_lesson=False, *args, **kwargs):
         schedule = {
             para: {
                 day: {
@@ -229,18 +229,34 @@ class Raspis(db.Model):
 
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].append(lesson)
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].sort(key=lambda l: l.groups[0].title)
+
+        if group_by_lesson:
+            for para, days in schedule.items():
+                for day, weeks in days.items():
+                    for week, lessons in weeks.items():
+                        weeks[week] = {}
+                        for lesson in lessons:
+                            key = "{}_{}".format(lesson.raspnagr.discipline.id, lesson.raspnagr.nt)
+                            weeks[week].setdefault(key, [])
+                            weeks[week][key].append(lesson)
+                        for key, dlessons in weeks[week].items():
+                            weeks[week][key] = dlessons[0] if dlessons else None
+                            for lesson in dlessons[1:]:
+                                weeks[week][key].groups += lesson.groups
+                        weeks[week] = weeks[week].values()
+
         return schedule
 
     @classmethod
-    def get_for_chair(cls, chair):
+    def get_for_chair(cls, chair, *args, **kwargs):
         raspis = Raspis.query.filter(
-            Raspis.raspnagr_id == chair.id
+            Raspis.raspnagr.has(kaf_id=chair.id)
         )
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
 
     @classmethod
-    def get_for_kontgrp(cls, kontgrp):
+    def get_for_kontgrp(cls, kontgrp, *args, **kwargs):
         raspis = Raspis.query.filter(
             or_(
                 Raspis.raspnagr.has(and_(
@@ -269,10 +285,10 @@ class Raspis(db.Model):
             )
         )
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
 
     @classmethod
-    def get_for_kontkurs(cls, kontkurs):
+    def get_for_kontkurs(cls, kontkurs, *args, **kwargs):
         Kontgrp2 = aliased(Kontgrp)
         Kontkurs2 = aliased(Kontkurs)
         raspis = Raspis.query \
@@ -290,32 +306,32 @@ class Raspis(db.Model):
                 Kontkurs2.id == kontkurs.id,
             ))
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
 
     @classmethod
-    def get_for_auditory(cls, auditory):
+    def get_for_auditory(cls, auditory, *args, **kwargs):
         raspis = Raspis.query.filter(
             Raspis.aud_id == auditory.id
         )
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
 
     @classmethod
-    def get_for_teacher(cls, teacher):
+    def get_for_teacher(cls, teacher, *args, **kwargs):
         raspis = Raspis.query.filter(
             or_(
                 Raspis.raspnagr.has(prep_id=teacher.id),
             )
         )
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
 
     @classmethod
-    def get_for_discipline(cls, discipline):
+    def get_for_discipline(cls, discipline, *args, **kwargs):
         raspis = Raspis.query.filter(
             or_(
                 Raspis.raspnagr.has(pred_id=discipline.id),
             )
         )
 
-        return cls._get_table(raspis)
+        return cls._get_table(raspis, *args, **kwargs)
