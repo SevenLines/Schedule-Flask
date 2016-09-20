@@ -20,7 +20,7 @@
         <div class="groups">
             {% for g in lesson.groups %}
                 <a href="{{ url_for("group_schedule", kont_id=g.id) }}" class="item">
-                    {{ g.title|replace("(И,О)", "") }}
+                    {{ g.get_title() }}
                 </a>
             {% endfor %}
         </div>

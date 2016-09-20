@@ -12,7 +12,7 @@ class Kontkurs(db.Model):
     kurs = db.Column(db.Integer)
     fil = db.Column(db.Integer)
     fac = db.Column(db.Integer)
-    aobozn = db.Column(db.Integer)
+    aobozn_id = db.Column("aobozn", db.Integer, db.ForeignKey('vacaobozn.id_6'))
     stud = db.Column(db.Integer)
     groups = db.Column(db.Integer)
     pgroups = db.Column(db.Integer)
@@ -34,6 +34,17 @@ class Kontkurs(db.Model):
 
     def __repr__(self):
         return str(self)
+
+    def get_title(self):
+        return self.title.replace("(И,О)", "")
+
+
+class Obozn(db.Model):
+    __tablename__ = "vacaobozn"
+    id = db.Column('id_6', db.Integer, primary_key=True)
+    title = db.Column("aobozn", db.String(50))
+
+    kontkurs = db.relationship("Kontkurs", backref=db.backref("aobozn", lazy="joined"))
 
 
 class Kontgrp(db.Model):
@@ -57,6 +68,21 @@ class Kontgrp(db.Model):
     def __repr__(self):
         return str(self)
 
+    def get_title(self):
+        return self.title.replace("(И,О)", "")
+        # if self.parent_id:
+        #     return "{}-{}-{}-{}".format(
+        #         self.kontkurs.kurs,
+        #         self.kontkurs.aobozn.title,
+        #         self.parent.ngroup,
+        #         self.ngroup,
+        #     )
+        # else:
+        #     return "{}-{}-{}".format(
+        #         self.kontkurs.kurs,
+        #         self.kontkurs.aobozn.title,
+        #         self.ngroup,
+        #     )
 
 class Kontlist(db.Model):
     id = db.Column('id_9', db.Integer, primary_key=True)
