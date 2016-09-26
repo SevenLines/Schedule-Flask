@@ -1,0 +1,777 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+    <!--    -->
+    <!--    -->
+
+    <title>Расписание занятий</title>
+    <link href="http://www.istu.edu/bitrix/templates/edu/css/style.css" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link href="http://www.istu.edu/bitrix/templates/edu/css/jquery.lightbox.css" rel="stylesheet" type="text/css"
+          media="screen"/>
+    <link rel="alternate" type="application/rss+xml" href="http://www.istu.edu/upload/iblock_rss_31.xml"
+          title="Новостная лента ИРНИТУ">
+    <script type="text/javascript" src="http://www.istu.edu/bitrix/js/main/core/core.js"></script>
+    <script type="text/javascript" src="http://www.istu.edu/bitrix/templates/edu/js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" src="http://www.istu.edu/bitrix/templates/edu/js/jquery.lightbox.js"></script>
+    <script type="text/javascript" src="http://www.istu.edu/bitrix/templates/edu/js/jquery.tools-1.1.1.js"></script>
+    <script type="text/javascript"
+            src="http://www.istu.edu/bitrix/templates/edu/js/jquery.tinycarousel.min.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="http://www.istu.edu/bitrix/templates/edu/js/hoverIntent.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="http://www.istu.edu/bitrix/templates/edu/js/jquery.dropdown.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="http://www.istu.edu/bitrix/templates/edu/js/jquery.cycle.all.latest.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ban_1_index').cycle({fx: 'fade'});
+        });
+        $(document).ready(function () {
+            $('#slider1').tinycarousel({interval: true, intervaltime: 6000});
+            $('#slider2').tinycarousel({interval: true, intervaltime: 6000});
+            $('#slider3').tinycarousel({interval: true, intervaltime: 6000});
+            $('#slider4').tinycarousel({interval: true, intervaltime: 6000});
+            $('#gallery a').lightBox({fixedNavigation: true});
+        });
+
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://www.istu.edu/bitrix/cache/css/s1/edu/kernel_intranet/kernel_intranet.css?147433733936539"
+          type="text/css" rel="stylesheet"/>
+    <link href="http://www.istu.edu/bitrix/cache/css/s1/edu/template_7e3732c1a899710274b5b720b7ba898b/template_7e3732c1a899710274b5b720b7ba898b.css?1415853666440"
+          type="text/css" data-template-style="true" rel="stylesheet"/>
+    <style>
+        img {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="panel"></div>
+
+<div class="wrapper" style="position: relative;">
+
+    <!--<div class="wrapper" style="background: URL(/new_year/bg_lenta.jpg) no-repeat -50px 0; position: relative;">-->
+    <div class="wrapper" style="position: relative;">
+        <!--
+        <div id="ny_lenta" style="width: 50px; position: absolute; left: -50px; background: URL(/new_year/bg_lenta.jpg) no-repeat; height: 600px;"></div>
+        <div id="ny_lenta2" style="width: 50px; position: absolute; left: -40px; top: 20px; background: URL(/new_year/elka.png) no-repeat; height: 200px; z-index: 20000; opacity: 0.99;"></div>
+        <div id="ny_lenta3" style="width: 150px; position: absolute; left: 0px; top: 38px; height: 200px; background: URL(/new_year/elka.png) no-repeat -40px -18px;"><img src="/bitrix/templates/edu/img/logo85_trnsp.png"></div>
+        -->
+        <div class="header zindex20"><!-- шапка-->
+            <div class="gray_line">
+
+                <p class="date">26 сентября 2016 года, Понедельник | <font color="2897bb">
+
+                    НЕДЕЛЯ НЕЧЕТНАЯ
+                    <script>vl = 1;</script>
+
+                </font></p>
+
+                <div class="flags">
+
+                    <div class="flag_active">
+                        <a href="?lang=rus"><img border="none"
+                                                 src="http://www.istu.edu/bitrix/templates/edu/img/rus.png">
+                            <p class="flags_font">RUS</p></a>
+                    </div>
+
+                    <div class="flag">
+                        <a href="?lang=eng"><img border="none"
+                                                 src="http://www.istu.edu/bitrix/templates/edu/img/eng.png">
+                            <p class="flags_font">ENG</p></a>
+                    </div>
+
+                    <div class="flag">
+                        <a href="?lang=cng"><img border="none"
+                                                 src="http://www.istu.edu/bitrix/templates/edu/img/chn.png">
+                            <p class="flags_font">CHN</p></a>
+                    </div>
+
+                    <div class="flag" style="width: 150px;">
+                        <a href="/special/"><img border="none"
+                                                 src="http://www.istu.edu/bitrix/templates/edu/img/special.png"
+                                                 style="margin-top: 5px;">
+                            <p class="flags_font">Для слабовидящих</p></a>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <a href="/" style="height: 100px; display: block; position: relative;"><img
+                    src="http://www.istu.edu/bitrix/templates/edu/img/logo2016.png" / border="0" style="position:
+                absolute; z-index: 7000;"></a>
+            <div class="right_block"><!-- правый блок в шапке( логин пароль поиск)-->
+
+                <form name="form_auth" method="post" target="_top" action="?login=yes" class="form">
+                    <input name="AUTH_FORM" value="Y" type="hidden">
+                    <input name="TYPE" value="AUTH" type="hidden">
+                    <input name="backurl" value="/" type="hidden">
+                    <input name="USER_LOGIN" class="login_pass" type="text" size="25" maxlength="40"
+                           onfocus="if(this.value=='Логин') this.value='';" value="Логин"/>
+                    <input name="USER_PASSWORD" class="login_pass" type="password" size="25" maxlength="40"
+                           onfocus="if(this.value=='Пароль') this.value='';" value="Пароль"/>
+                    <input id="USER_REMEMBER" name="USER_REMEMBER" value="Y" type="hidden">
+                    <input name="Login" class="btn_enter" type="submit" value="вход"/>
+                </form>
+
+                <form action="/search/" method="GET" name="form_search" class="form_search">
+                    <input name="search" class="search" type="text" size="25" maxlength="40"
+                           onfocus="if(this.value=='Поиск...') this.value='';" value="Поиск..."/>
+                    <input name="lupa" class="lupa" type="submit" value=""/>
+                </form>
+
+                <div class="crohi">
+                    <a href="/"><img border="none" src="http://www.istu.edu/bitrix/templates/edu/img/home.png"/></a>
+                    &nbsp;<a href="http://www.istu.edu/sitemap.xml"><img border="none"
+                                                                         src="http://www.istu.edu/bitrix/templates/edu/img/map.png"/></a>
+                </div>
+
+
+            </div><!-- правый блок в шапке( логин пароль поиск)-->
+
+
+            <div class="menu_mini">
+
+                <ul>
+
+                    <li><a href="http://library.istu.edu/">Библиотека</a></li>
+                    <li><a href="http://www.istu.edu/schedule/">Расписание</a></li>
+                    <li><a href="http://www.istu.edu/structure/56/1538/">Контакты</a></li>
+
+
+                </ul>
+
+            </div>
+
+            <div id="menu">
+                <ul class="dropdown">
+                    <li><b><a href="/structure/56/">Об университете</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/56/4604/" style="border-top:0px;">Сведения об образовательной
+                                организации</a></li>
+                            <li><a href="/structure/56/4096/">Общая информация</a></li>
+                            <li><a href="/structure/56/4700/">Отчет и.о. ректора ИРНИТУ за 2013-2014 гг.</a></li>
+                            <li><a href="/structure/56/1505/">Нормативные документы</a></li>
+                            <li><a href="/structure/56/4097/">Управление университетом</a></li>
+                            <li><a href="/structure/56/4098/">Структура университета</a></li>
+                            <li><a href="/structure/56/4099/">Достижения ИРНИТУ</a></li>
+                            <li><a href="/structure/56/1539/">Полезные ссылки</a></li>
+                            <li><a href="/structure/56/1538/">Контакты</a></li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/55/">Программа НИУ</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/55/1342/" style="border-top:0px;">О программе</a></li>
+                            <li><a href="/structure/55/2450/">География НИУ</a></li>
+                            <li><a href="/structure/55/1468/">Управление программой</a></li>
+                            <li><a href="/structure/55/1337/">Нормативные документы</a></li>
+                            <li><a href="/structure/55/1432/">Реализация программы</a></li>
+                            <li><a href="/structure/55/1336/">Контакты Дирекции программы развития</a></li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/54/">Наука</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/54/4101/" style="border-top:0px;">Управление научной
+                                деятельностью</a></li>
+                            <li><a href="/structure/54/1861/">Руководство управления</a></li>
+                            <li><a href="/structure/54/1865/">Научно-исследовательская часть</a></li>
+                            <li><a href="/structure/54/1319/">Аспирантура и докторантура</a></li>
+                            <li><a href="/structure/54/4111/">НИРС</a></li>
+                            <li><a href="/structure/54/4113/">Редакционно-издательский отдел. </a></li>
+                            <li><a href="/structure/54/4104/">Направления научной деятельности</a></li>
+                            <li><a href="/structure/54/4103/">Научно-исследовательская база</a></li>
+                            <li><a href="/structure/54/4656/">Научные стажировки</a></li>
+                            <li><a href="/structure/54/1220/">Научные издания ИРНИТУ</a></li>
+                            <li><a href="/structure/54/4107/">Научные мероприятия</a></li>
+                            <li><a href="/structure/54/4657/">Результаты научной деятельности</a></li>
+                            <li><a href="/structure/54/5759/">Конкурсы на замещение должностей научных работников</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/57/">Образование</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/57/1556/" style="border-top:0px;">Учебная структура</a></li>
+                            <li><a href="/structure/57/4308/">Уровни образования</a></li>
+                            <li><a href="/structure/57/2515/">Институты и факультеты</a></li>
+                            <li><a href="/structure/57/1552/">Практика и трудоустройство студентов</a></li>
+                            <li><a href="/structure/57/3867/">Состав педагогических работников</a></li>
+                            <li><a href="/structure/57/5347/">Объявления конкурсов на замещение должностей</a></li>
+                            <li><a href="/structure/57/1551/">Полезная информация </a></li>
+                            <li><a href="/structure/57/1557/">Часто задаваемые вопросы</a></li>
+                            <li><a href="/structure/57/1540/">Задать вопрос </a></li>
+                            <li><a href="/structure/57/6303/">Открытые международные студенческие Интернет-олимпиады</a>
+                            </li>
+                            <li><a href="/structure/57/4920/">Электронное обучение</a></li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/51/">Инновации</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/51/1134/" style="border-top:0px;">Структура</a></li>
+                            <li><a href="/structure/51/4616/">Байкальская молодежная ярмарка франшиз</a></li>
+                            <li><a href="/structure/51/4129/">Сотрудники, контакты</a></li>
+                            <li><a href="/structure/51/1141/">Технопарк</a></li>
+                            <li><a href="/structure/51/3533/">Молодежное предпринимательство </a></li>
+                            <li><a href="/structure/51/3534/">Компании, созданные выпускниками и сотрудниками
+                                университета</a></li>
+                            <li><a href="/structure/51/1133/">Проекты</a></li>
+                            <li><a href="/structure/51/1131/">Патенты и свидетельства</a></li>
+                            <li><a href="/structure/51/1132/">Полезная информация</a></li>
+                            <li><a href="/structure/51/1130/">Отчеты об инновационной деятельности</a></li>
+                            <li><a href="/structure/51/4140/">Центр поддержки технологий и инноваций ФИПС-ИРНИТУ</a>
+                            </li>
+                            <li><a href="/structure/51/5014/">Журнал &quot;Наука Приангарья&quot;</a></li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/53/">Международная деятельность</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/53/2738/" style="border-top:0px;">Управление международной
+                                деятельности</a></li>
+                            <li><a href="/structure/53/3547/">Новости и события международной деятельности</a></li>
+                            <li><a href="/structure/53/1179/">Международное партнерство</a></li>
+                            <li><a href="/structure/53/6603/">Международная аккредитация</a></li>
+                            <li><a href="/structure/53/1170/">Международные проекты</a></li>
+                            <li><a href="/structure/53/1169/">Обучение и научная работа за рубежом</a></li>
+                            <li><a href="/structure/53/6595/">Гранты, стипендии, конкурсы </a></li>
+                            <li><a href="/structure/53/1168/">Обучение и научная работа иностранных граждан в ИРНИТУ</a>
+                            </li>
+                            <li><a href="/structure/53/6594/">Офис преподавателя DAAD в ИРНИТУ </a></li>
+                            <li><a href="/structure/53/1187/">Задать вопрос</a></li>
+                        </ul>
+                    </li>
+                    <li><b><a href="/structure/49/">Воспитание, культура, спорт, здоровье</a></b>
+                        <ul class="sub_menu">
+                            <div class="linehide"></div>
+                            <li><a href="/structure/49/1038/" style="border-top:0px;">Управление по социальной,
+                                воспитательной и культурно-массовой работе</a></li>
+                            <li><a href="/structure/49/3041/">Студенческий городок</a></li>
+                            <li><a href="/structure/49/1102/">Полезная информация</a></li>
+                        </ul>
+                    </li>
+
+            </div><!-- Главное меню-->
+
+        </div><!-- шапка-->
+        <div class="hist">
+            <a href="/">Главная</a> > <a href="?type=0">Расписание занятий</a></div>
+
+        <div class="middle">
+
+            <div class="container">
+                <div class="content"><!--контент-->
+
+                    <script type="text/javascript" src="/_sys/js/jquery.qrcode-0.12.0.min.js"></script>
+                    <style type="text/css">
+                        .view_print {
+                            padding: 20px 100px;
+                            font-family: 'Trebuchet MS', Arial;
+                        }
+
+                        .sch_search {
+                            border: 1px solid #ddd;
+                            margin: 20px 0;
+                            padding: 10px;
+                            border-radius: 5px;
+                            background: #eee;
+                        }
+
+                        .sch_search input[type="text"] {
+                            border: 1px solid #999;
+                            border-radius: 5px;
+                            width: 300px;
+                            height: 25px;
+                            padding: 0 5px;
+                        }
+
+                        .sch_search input[type="submit"] {
+                            border: 1px solid #999;
+                            border-radius: 5px;
+                            height: 25px;
+                            background: #eee;
+                            padding: 0 10px;
+                            cursor: pointer;
+                        }
+
+                        .sch_search h3 {
+                            margin: 0 0 5px 0;
+                        }
+
+                        .sch_search p {
+                            margin: 0 0 5px 0;
+                            color: #999;
+                        }
+
+                        .sch_table {
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+
+                        .sch_table td {
+                            border-bottom: 1px solid #999;
+                            padding: 7px;
+                        }
+
+                        .sch_table td.sch_one {
+                            border-bottom: 1px solid #eee;
+                        }
+
+                        .sch_aud {
+                            width: 70px;
+                            padding-right: 0 !important;
+                        }
+
+                        .sch_predmet {
+                            font-weight: bold;
+                            font-size: 110%;
+                        }
+
+                        .sch_item {
+                            margin-bottom: 5px !important;
+                        }
+
+                        .sch_type {
+                            color: #999;
+                            font-style: italic;
+                            font-size: 90%;
+                        }
+
+                        .sch_prepod a, .sch_group a {
+                            font-style: italic;
+                            font-size: 90%;
+                        }
+
+                        .sch_day {
+                            padding-top: 20px !important;
+                            font-size: 150%;
+                            color: #578aa8;
+                            padding-left: 0 !important;
+                        }
+
+                        .sch_select .sch_para, .sch_select .sch_aud, .sch_select .sch_one, .sch_select .sch_two {
+                            background: #ffd;
+                        }
+
+                        .sch_view {
+                            list-style-type: none;
+                            overflow: hidden;
+                            margin-bottom: 20px !important;
+                        }
+
+                        .sch_view li {
+                            display: block;
+                            float: right;
+                            padding: 0 10px;
+                            font-size: 80%;
+                            border-bottom: 1px solid #578aa8;
+                            cursor: pointer;
+                            margin-top: 0 !important;
+                            color: #999 !important;
+                        }
+
+                        .view_chet .view_chet, .view_nechet .view_nechet, .view_all .view_all {
+                            border-width: 3px;
+                            color: #000 !important;
+                        }
+
+                        .view_chet .sch_one, .view_chet .sch_one a, .view_chet .sch_one span {
+                            color: #ddd;
+                        }
+
+                        .view_nechet .sch_two, .view_nechet .sch_two a, .view_nechet .sch_two span {
+                            color: #ddd;
+                        }
+
+                        .view_screen, .view_print .view_print {
+                            display: none !important;
+                        }
+
+                        .view_print .view_screen {
+                            display: block !important;
+                        }
+
+                        .view_print a {
+                            color: #07f;
+                        }
+
+                        .sch_zcomment {
+                            color: #ccc;
+                            margin-top: -15px;
+                            font-size: 90%;
+                            font-style: italic;
+                        }
+
+                        .sch_tday, .sch_ttime {
+                            color: #090;
+                        }
+                    </style>
+                    <script type="text/javascript">
+                        function glow(type, obj) {
+                            //alert(obj.tagName);
+                            while (obj.tagName != 'TR') obj = obj.parentNode;
+                            if (type == 'on') obj.className = 'sch_select';
+                            if (type == 'off') obj.className = '';
+                        }
+                        function my_view(obj) {
+                            if (obj.className != 'view_print' || obj.className != 'view_screen') {
+                                document.getElementById('schedule').className = obj.className;
+                            }
+                            if (obj.className == 'view_print') {
+                                document.location.href = '?type=0&value=4478180201600803002016012026&view=print';
+                            }
+                            if (obj.className == 'view_screen') {
+                                document.location.href = '?type=0&value=4478180201600803002016012026';
+                            }
+                        }
+                    </script>
+
+                    <h1 class="zagolovok">Расписание занятий</h1>
+                    <div id="schedule" class="view_nechet">
+
+
+
+
+                        <h3>Выбор факультета</h3>
+                        <ul>
+                            <li><a href="?type=1&amp;value=664">Аспирантура</a>
+                            <li><a href="?type=1&amp;value=143">Вечерний</a>
+                            <li><a href="?type=1&amp;value=1">Институт авиамашиностроения и транспорта</a>
+                            <li><a href="?type=1&amp;value=8">Институт архитектуры и строительства</a>
+                            <li><a href="?type=1&amp;value=146">Институт изобразительных искусств и
+                                социально-гуманитарных
+                                наук</a>
+                            <li><a href="?type=1&amp;value=5">Институт кибернетики им. Е.И.Попова</a>
+                            <li><a href="?type=1&amp;value=9">Институт металлургии и химической технологии им. С.Б.
+                                Леонова</a>
+                            <li><a href="?type=1&amp;value=4">Институт недропользования</a>
+                            <li><a href="?type=1&amp;value=661">Институт пищевой инженерии и биотехнологии</a>
+                            <li><a href="?type=1&amp;value=144">Институт экономики, управления и права</a>
+                            <li><a href="?type=1&amp;value=10">Институт энергетики</a>
+                            <li><a href="?type=1&amp;value=401">Физико-технический институт</a>
+                        </ul>
+                        <h3>Дополнительно</h3>
+                        <ul>
+                            <li><a href="/structure/62/5068/">Расписание сессии</a>
+                        </ul>
+
+                        <h2 style="padding-top: 1em">Памятка по работе с расписанием</h2>
+<p>Текущее расписание учебных занятий начинает действовать с 19 сентября по 25&nbsp;декабря.
+
+<table class="sch_table">
+    <tbody>
+    <tr>
+        <td class="sch_day sch_tday" colspan="3">День недели</td>
+    </tr>
+    <tr class="">
+        <td rowspan="2" class="sch_time">11:35 [Начало пары]</td>
+        <td class="sch_para  sch_one" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">
+            <div class="sch_item"><span
+                    class="sch_predmet">Дисциплина по нечетной неделе</span><br><span
+                    class="sch_type">([вид дисциплины])</span> <span class="sch_prepod"><a
+                    href="#">[ФИО преподавателя]</a></span></div>
+        </td>
+        <td class="sch_aud  sch_one" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">[Аудитория]&nbsp;</td>
+    </tr>
+    <tr class="">
+        <td class="sch_para  sch_two" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">
+            <div class="sch_item"><span
+                    class="sch_predmet">Дисциплина по четной неделе</span><br><span
+                    class="sch_type">([вид дисциплины])</span>
+                <span class="sch_prepod"><a href="#">[ФИО преподавателя]</a></span></div>
+        </td>
+        <td class="sch_aud  sch_two" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">[Аудитория]&nbsp;</td>
+    </tr>
+    <tr class="">
+        <td rowspan="1" class="sch_time">13:45 [Начало пары]</td>
+        <td class="sch_para sch_all" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">
+            <div class="sch_item"><span
+                    class="sch_predmet">Еженедельная дисциплина</span><br><span
+                    class="sch_type">(Лаб. раб.- подгруппа 2 [Номер подгруппы для которой проводится дисциплина])</span>
+                <span class="sch_prepod"><a href="#">[ФИО преподавателя]</a></span></div>
+        </td>
+        <td class="sch_aud sch_all" onmouseover="glow('on',this);"
+            onmouseout="glow('off',this);">[Аудитория]&nbsp;</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<h3>Сетка расписания:</h3>
+<ul>
+    <li>8:15 - 9:45</li>
+    <li>9:55 - 11:25</li>
+    <li>11:35 - 13:05</li>
+    <li>Обеденный перерыв с 13:05 до 13:45</li>
+    <li>13:45 - 15:15</li>
+    <li>15:25 - 16:55</li>
+    <li>17:05 - 18:35</li>
+</ul>
+<br>
+Лекции проводятся потоками, практики - всей подгруппой, лабораторные по подгруппам
+</p>
+
+                        <form method=get class="sch_search">
+                            <h3>Поиск</h3>
+                            <p>
+                                <input type="hidden" name="type" value="5">
+                                <input type="text" name="value" value="">
+                                <input type="submit" value="Искать">
+                            <p><i>Введите код группы или фамилию преподавателя</i>
+                        </form>
+                    </div>
+                    <p>&nbsp;</p>
+                </div><!--контент-->
+            </div>
+
+
+            <div class="left-side"><!-- Левый блок -->
+
+                <div id="vkladki"><!-- Вкладки-->
+
+                    <ul>
+                        <li><a href="/structure/48/" title="Абитуриентам">Абитуриентам</a></li>
+                        <li><a href="/structure/62/" title="Студентам">Студентам</a></li>
+                        <li><a style="padding-top: 15px;" href="/structure/50/" title="Выпускникам и работодателям">Выпускникам
+                            и работодателям</a></li>
+                        <li><a style="padding-top: 15px;" href="/structure/61/" title="Сотрудникам и преподавателям">Сотрудникам
+                            и преподавателям</a></li>
+                        <li><a href="/structure/58/" title="Общественная жизнь">Общественная жизнь</a></li>
+                        <li><a href="/structure/59/" title="Пресс-служба ИрГТУ">Пресс-служба ИРНИТУ</a></li>
+                    </ul>
+
+                </div><!-- Вкладки--></div><!-- Левый блок -->
+            <div class="right-side"><!-- Правый блок -->
+                <script>
+                    var initLayout = function () {
+
+                        var hash = window.location.hash.replace('#', '');
+                        //var hash = "";
+                        var currentTab = $('ul.navigationTabs a').bind('click', showTab).filter('a[rel=' + hash + ']');
+                        if (currentTab.size() == 0) {
+                            currentTab = $('ul.navigationTabs a:first');
+                        }
+                        //alert(currentTab);
+                        showTab.apply(currentTab);
+
+                        var datese = '2016-09-26';
+                        $('#date').DatePicker({
+                            flat: true,
+                            date: '2016-09-26',
+                            current: '2016-09-26',
+                            calendars: 1,
+                            starts: 1,
+                            onChange: function (formated, dates) {
+                                $('#inputDate').val(formated);
+                                if (datese != formated) {
+                                    document.location.href = "/news/" + formated + "/";
+                                    //alert(formated);
+                                }
+                            }
+                        });
+
+                    };
+
+                    var showTab = function (e) {
+                        var tabIndex = $('ul.navigationTabs a').removeClass('active').index(this);
+                        $(this).addClass('active').blur();
+                        $('div.tab').hide().eq(tabIndex).show();
+                    };
+
+                    EYE.register(initLayout, 'init');
+
+
+                </script>
+                <div>
+                    <div class="shadow">
+
+
+                        <div class="obyavlenia obyavlenia_index">
+                            <div id="slider3">
+                                <a class="title">Объявления</a>
+                                <div class="viewport">
+                                    <ul class="overview">
+                                        <li><p><b>Интеллектуальный конкурс &quot;Битва умов - 2016&quot;!!!!!</b></p>
+                                            <p>
+                                                3 октября 2016 года стартует четвертая сессия
+                                            </p>
+                                            <p><a href="/structure/56/5530/?item=25899">подробнее</a></p></li>
+                                        <li><p><b>Всероссийский молодежный научный конгресс &quot;Россия. Экология.
+                                            Энергосбережение&quot;</b></p>
+                                            <p>
+                                                16-17 декабря 2016г. в инновационном центре "Сколково
+                                            </p>
+                                            <p><a href="/structure/56/5530/?item=25898">подробнее</a></p></li>
+                                        <li><p><b>Продолжается прием заявок на Региональную олимпиаду по
+                                            программированию </b></p>(12-14 октября 2016 г.)<p><a
+                                                href="/structure/56/5530/?item=25896">подробнее</a></p></li>
+                                        <li><p><a href="/structure/56/5530/?item=25875"><b>О изменении порядка
+                                            предоставления льгот студентам на проезд железнодорожным транспортом</b></a>
+                                        </p>
+                                        </li>
+                                        <li><p><b>Приглашаем на встречу студентов и преподавателей нашего вуза с
+                                            российскими
+                                            писателями</b></p>
+                                            <p>
+                                                28 сентября в 15:30
+                                            </p>
+                                            <p><a href="/structure/56/5530/?item=25859">подробнее</a></p></li>
+                                        <li><p><b>Приглашаем всех на курсы «Как создать свой инновационный бизнес с
+                                            нуля?»</b></p>(«Инновационный менеджмент, венчурное финансирование,
+                                            коммерциализация
+                                            технологий»)<p><a href="/structure/56/5530/?item=25783">подробнее</a></p>
+                                        </li>
+                                        <li><p><b>X Международный биотехнологический Форум-выставка &quot;РосБиоТех-2016&quot;.</b>
+                                        </p>
+                                            <a href="https://vk.com/away.php?to=http%3A%2F%2Fwww.rosbiotech.com%2F&post=-46864386_1213"
+                                               target="_blank">http://www.rosbiotech.com/</a>
+                                            <p><a href="/structure/56/5530/?item=25782">подробнее</a></p></li>
+                                        <li><p><b>Конкурс &quot;ЭПИЦЕНТР&quot;</b></p>Британское Архитектурное бюро Dyer
+                                            приглашает студентов принять&nbsp;участие во&nbsp;Всероссийском творческом
+                                            конкурсе.<p><a href="/structure/56/5530/?item=25779">подробнее</a></p></li>
+                                        <li><p><b>Медосмотр</b></p>Приглашаем сотрудниц ИРНИТУ пройти углубленный
+                                            медицинский осмотр<p><a href="/structure/56/5530/?item=25247">подробнее</a>
+                                            </p>
+                                        </li>
+                                        <li><p><b>Первокурсникам-юношам необходимо встать на воинский учет</b></p>
+                                            <p>в период с 1 сентября по 30 сентября 2016 г. </p><span
+                                                    id="bx-cursor-node"> </span>
+                                            <p></p>
+                                            <p><a href="/structure/56/5530/?item=25164">подробнее</a></p></li>
+                                    </ul>
+                                </div>
+                                <div class="navigate">
+                                    <a class="buttons prev" href="#">‹</a>
+                                    <a class="buttons next" href="#">›</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shadow">
+                        <div class="ban_1">
+                            <!--'start_frame_cache_1RrCSy'--><a
+                                href="/bitrix/rk.php?id=127&amp;site_id=s1&amp;event1=banner&amp;event2=click&amp;event3=1+%2F+%5B127%5D+%5BGL_2%5D+%D0%A4%D0%BE%D0%BD%D0%B4+%D0%BF%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%BA%D0%B8+%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D1%8F&amp;goto=%2Fstructure%2F51%2F1141%2F4318%2F"><img
+                                alt="" title="" src="/upload/rk/dd1/banner.png" width="224" height="168"
+                                style="border:0;"/></a>
+                            <!--'end_frame_cache_1RrCSy'-->
+                        </div>
+                        <div class="ban_2">
+                            <!--'start_frame_cache_aicXL2'--><a
+                                href="/bitrix/rk.php?id=352&amp;site_id=s1&amp;event1=banner&amp;event2=click&amp;event3=1+%2F+%5B352%5D+%5BGL_3%5D+%D0%A4%D0%BE%D1%80%D0%BC%D0%B0+%D0%B4%D0%BB%D1%8F+%D1%82%D0%B5%D1%80%D1%80%D0%BE%D1%80%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85+%D1%81%D0%B0%D0%B9%D1%82%D0%BE%D0%B2&amp;goto=https%3A%2F%2Fwww.oprf.ru%2F1449%2F2284%2F&amp;af=e2195bafb4998e83e074eac5e6ea3ffa"><img
+                                alt="" title="" src="/upload/rk/ec8/banner.png" width="224" height="169"
+                                style="border:0;"/></a>
+                            <!--'end_frame_cache_aicXL2'-->
+                        </div>
+                    </div>
+                </div><!-- Правый блок -->
+            </div>
+            <div class="footer"><!--подвал-->
+                <div style="padding: 10px;">
+                    Федеральное государственное бюджетное образовательное учреждение высшего
+                    образования <br>«Иркутский национальный исследовательский технический университет»<br>
+                    ФГБОУ ВО «ИРНИТУ»
+                </div>
+                <ul>
+
+                    <li>
+<span>
+<b>Министерство образования и науки<br>
+Российской Федерации</b><br><br>
+Россия, 125993, Москва<br>
+улица Тверская, дом 11<br>
+ГСП-3
+ <br>
+ <a href="http://минобрнауки.рф/">http://минобрнауки.рф/</a>
+</span>
+                    </li>
+                    <li>
+<span>
+<b>Иркутский национальный<br>исследовательский технический<br>университет</b>
+<br/><br/>
+ 664074, г. Иркутск, ул. Лермонтова 83<br/>
+ тел/факс 8 (3952) 405-100, 405-009, e-mail:
+
+<script language="javascript">
+
+<!--
+
+var eta = "@"
+var vardas = "info";
+var servas = "istu.edu";
+document.write("<a href=" + "mail" + "to:" + vardas + eta + servas +
+        ">" + vardas + eta + servas + "</a>")
+
+//-->
+
+</script>
+</span>
+                    </li>
+
+
+                    <li>
+  <span>
+<b> Центральная приемная комиссия ИрНИТУ</b><br/><br/>
+ 664074, г. Иркутск, ул. Лермонтова 83, Главный корпус ИрНИТУ,<br/>
+ аудитория - А-105<br/>
+ тел/факс 8 (3952) 405-405, e-mail:
+
+<script language="javascript">
+
+<!--
+
+var eta = "@"
+var vardas = "cpk";
+var servas = "istu.edu";
+document.write("<a href=" + "mail" + "to:" + vardas + eta + servas +
+        ">" + vardas + eta + servas + "</a>")
+
+//-->
+
+</script>
+</span>
+                    </li>
+
+                </ul>
+
+
+            </div><!--подвал-->
+
+
+        </div><!-- контент -->
+
+
+    </div>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-26005682-1']);
+        _gaq.push(['_setDomainName', 'istu.edu']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+</body>
+</html>
