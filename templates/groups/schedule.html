@@ -4,6 +4,20 @@
     {{ super() }}
 {% endblock %}
 {% block body %}
+    <div>
+        <form class="elements-visibility-form form-inline" action="">
+            <label>Группы
+                <input type="checkbox" name="chk-groups">
+            </label>
+            <label>Институты
+                <input type="checkbox" name="chk-faculty">
+            </label>
+            <label>Преподаватели
+                <input type="checkbox" name="chk-teacher">
+            </label>
+        </form>
+
+    </div>
     <table class="schedule">
         <tbody>
         {% for para, days in schedule.items() %}
@@ -30,7 +44,6 @@
                                 <div class="lesson even {% if not lessons_even %}empty{% endif %}">
                                     {{ macros.lesson_tags(lessons_even) }}
                                 </div>
-
                             {% endif %}
                         </td>
                     {% endif %}

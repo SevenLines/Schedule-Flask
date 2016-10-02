@@ -11,7 +11,7 @@ class Kontkurs(db.Model):
     spclntion = db.Column(db.Integer)
     kurs = db.Column(db.Integer)
     fil = db.Column(db.Integer)
-    fac = db.Column(db.Integer)
+    fac_id = db.Column("fac", db.Integer, db.ForeignKey('vacfac.id_5'))
     aobozn_id = db.Column("aobozn", db.Integer, db.ForeignKey('vacaobozn.id_6'))
     stud = db.Column(db.Integer)
     groups = db.Column(db.Integer)
@@ -191,6 +191,7 @@ class Faculty(db.Model):
     id = db.Column('id_5', db.Integer, primary_key=True)
     title = db.Column("fac", db.String(65))
 
+    kontkurs = db.relationship('Kontkurs', backref=db.backref('faculty', lazy='joined'), lazy='dynamic')
 
 class Chair(db.Model):
     __tablename__ = "vackaf"
@@ -222,7 +223,7 @@ class Raspis(db.Model):
     insdate = db.Column(db.DateTime)
 
     @classmethod
-    def _get_table(cls, rows, group_by_lesson=False, *args, **kwargs):
+    def _get_table(cls, rows, group_by_lesson=False, key_template=None, *args, **kwargs):
         schedule = {
             para: {
                 day: {
@@ -233,17 +234,24 @@ class Raspis(db.Model):
                 } for para in [0, 1, 2, 3, 4, 5, 6, 7, 8]
             }
 
+        if key_template is None:
+            key_template = "{discipline_id}_{nt}"
+
         for lesson in rows.order_by(Raspis.day, Raspis.para):
             setattr(lesson, 'groups', [])
 
             if lesson.raspnagr.kontgrp:
                 lesson.groups = [lesson.raspnagr.kontgrp, ]
+                lesson.faculty = lesson.raspnagr.kontgrp.kontkurs.faculty
             elif lesson.raspnagr.kontkurs:
                 lesson.groups = [lesson.raspnagr.kontkurs, ]
+                lesson.faculty = lesson.raspnagr.kontkurs.faculty
             elif lesson.raspnagr.kontgrplist:
                 lesson.groups = [i.kontgrp for i in lesson.raspnagr.kontgrplist]
+                lesson.faculty = lesson.groups[0].kontkurs.faculty
             elif lesson.raspnagr.kontlist:
                 lesson.groups = [i.kontkurs for i in lesson.raspnagr.kontlist]
+                lesson.faculty = lesson.groups[0].faculty
 
             if lesson.everyweek == 1:
                 if lesson.day > 7:
@@ -262,14 +270,20 @@ class Raspis(db.Model):
                     for week, lessons in weeks.items():
                         weeks[week] = {}
                         for lesson in lessons:
-                            key = "{}_{}".format(lesson.raspnagr.discipline.id, lesson.raspnagr.nt)
+                            key = key_template.format(**{
+                                'discipline_id': lesson.raspnagr.discipline.id,
+                                'nt': lesson.raspnagr.nt,
+                                'fac_id': lesson.faculty.id ,
+                            })
                             weeks[week].setdefault(key, [])
                             weeks[week][key].append(lesson)
                         for key, dlessons in weeks[week].items():
                             weeks[week][key] = dlessons[0] if dlessons else None
                             for lesson in dlessons[1:]:
                                 weeks[week][key].groups += lesson.groups
+                            weeks[week][key].groups.sort(key=lambda l: l.title)
                         weeks[week] = weeks[week].values()
+
 
         return schedule
 

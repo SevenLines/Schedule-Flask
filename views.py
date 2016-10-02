@@ -103,7 +103,7 @@ def physical_education_schedule():
     """
     PHYSICAL_EDUCATION_CHAIR_ID = 218
     chair = Chair.query.get(PHYSICAL_EDUCATION_CHAIR_ID)
-    schedule = Raspis.get_for_chair(chair, group_by_lesson=True)
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
 
     if request.is_xhr:
         return flask.jsonify(schedule)
