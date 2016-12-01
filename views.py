@@ -1,3 +1,4 @@
+# coding=utf-8
 import json
 
 import flask
@@ -103,7 +104,7 @@ def physical_education_schedule():
     """
     PHYSICAL_EDUCATION_CHAIR_ID = 218
     chair = Chair.query.get(PHYSICAL_EDUCATION_CHAIR_ID)
-    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}_{kurs}')
 
     if request.is_xhr:
         return flask.jsonify(schedule)
@@ -120,7 +121,7 @@ def foreign_for_humans():
     """
     FOREIGN_HUMAN_CHAIR_ID = 366
     chair = Chair.query.get(FOREIGN_HUMAN_CHAIR_ID)
-    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}_{kurs}')
 
     if request.is_xhr:
         return flask.jsonify(schedule)
@@ -137,7 +138,7 @@ def foreign_for_tech_1():
     """
     FOREIGN_TECH_CHAID_ID = 216
     chair = Chair.query.get(FOREIGN_TECH_CHAID_ID)
-    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}_{kurs}')
 
     if request.is_xhr:
         return flask.jsonify(schedule)
@@ -154,7 +155,7 @@ def foreign_for_tech_2():
     """
     FOREIGN_TECH_CHAID_ID = 217
     chair = Chair.query.get(FOREIGN_TECH_CHAID_ID)
-    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}_{kurs}')
 
     if request.is_xhr:
         return flask.jsonify(schedule)

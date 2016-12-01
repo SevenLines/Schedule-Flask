@@ -1,3 +1,4 @@
+# coding=utf-8
 def dayofweek(number):
     return {
         1: "Понедельник",

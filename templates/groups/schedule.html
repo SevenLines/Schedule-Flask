@@ -16,7 +16,6 @@
                 <input type="checkbox" name="chk-teacher">
             </label>
         </form>
-
     </div>
     <table class="schedule">
         <tbody>
@@ -33,16 +32,16 @@
                             {% set lessons_even = weeks['even'] %}
                             {% if lessons_every %}
                                 <div class="lesson everyweek">
-                                    {{ macros.lesson_tags(lessons_every) }}
+                                    {{ macros.lesson_tags(lessons_every, group) }}
                                 </div>
                             {% elif lessons_odd or lessons_even %}
                                 <div class="cell-back odd {% if not lessons_odd %}empty{% endif %}"></div>
                                 <div class="cell-back even {% if not lessons_even %}empty{% endif %}"></div>
                                 <div class="lesson odd {% if not lessons_odd %}empty{% endif %}">
-                                    {{ macros.lesson_tags(lessons_odd) }}
+                                    {{ macros.lesson_tags(lessons_odd, group) }}
                                 </div>
                                 <div class="lesson even {% if not lessons_even %}empty{% endif %}">
-                                    {{ macros.lesson_tags(lessons_even) }}
+                                    {{ macros.lesson_tags(lessons_even, group) }}
                                 </div>
                             {% endif %}
                         </td>

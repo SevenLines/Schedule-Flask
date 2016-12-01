@@ -1,3 +1,4 @@
+# coding=utf-8
 from sqlalchemy.orm.util import aliased
 from sqlalchemy.sql.expression import or_, and_
 
@@ -83,6 +84,7 @@ class Kontgrp(db.Model):
         #         self.kontkurs.aobozn.title,
         #         self.ngroup,
         #     )
+
 
 class Kontlist(db.Model):
     id = db.Column('id_9', db.Integer, primary_key=True)
@@ -193,6 +195,7 @@ class Faculty(db.Model):
 
     kontkurs = db.relationship('Kontkurs', backref=db.backref('faculty', lazy='joined'), lazy='dynamic')
 
+
 class Chair(db.Model):
     __tablename__ = "vackaf"
     id = db.Column('id_17', db.Integer, primary_key=True)
@@ -270,20 +273,22 @@ class Raspis(db.Model):
                     for week, lessons in weeks.items():
                         weeks[week] = {}
                         for lesson in lessons:
-                            key = key_template.format(**{
-                                'discipline_id': lesson.raspnagr.discipline.id,
-                                'nt': lesson.raspnagr.nt,
-                                'fac_id': lesson.faculty.id ,
-                            })
-                            weeks[week].setdefault(key, [])
-                            weeks[week][key].append(lesson)
+                            for kont in lesson.groups:
+                                kont.kurs = kont.kontkurs.kurs if hasattr(kont, 'kontkurs') else kont.kurs
+                                key = key_template.format(**{
+                                    'discipline_id': lesson.raspnagr.discipline.id,
+                                    'nt': lesson.raspnagr.nt,
+                                    'fac_id': lesson.faculty.id,
+                                    'kurs': kont.kurs
+                                })
+                                weeks[week].setdefault(key, [])
+                                weeks[week][key].append(lesson)
                         for key, dlessons in weeks[week].items():
                             weeks[week][key] = dlessons[0] if dlessons else None
                             for lesson in dlessons[1:]:
                                 weeks[week][key].groups += lesson.groups
                             weeks[week][key].groups.sort(key=lambda l: l.title)
                         weeks[week] = weeks[week].values()
-
 
         return schedule
 
@@ -316,7 +321,7 @@ class Raspis(db.Model):
                         ),
                         and_(
                             Kontgrp.depth > kontgrp.depth,
-                            Kontgrp.parent_id==kontgrp.id,
+                            Kontgrp.parent_id == kontgrp.id,
                         )
                     )),
                 )),
