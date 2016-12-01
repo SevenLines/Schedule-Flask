@@ -111,3 +111,54 @@ def physical_education_schedule():
     return render_template_schedule("groups/schedule.html", **{
         "schedule": schedule
     })
+
+@app.route("/report/foreign-for-humans/")
+def foreign_for_humans():
+    """
+    расписание иностранных для гуманитарных специальностей
+    :return:
+    """
+    FOREIGN_HUMAN_CHAIR_ID = 366
+    chair = Chair.query.get(FOREIGN_HUMAN_CHAIR_ID)
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
+    return render_template_schedule("groups/schedule.html", **{
+        "schedule": schedule
+    })
+
+@app.route("/report/foreign-for-tech-1/")
+def foreign_for_tech_1():
+    """
+    расписание иностранных для гуманитарных специальностей
+    :return:
+    """
+    FOREIGN_TECH_CHAID_ID = 216
+    chair = Chair.query.get(FOREIGN_TECH_CHAID_ID)
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
+    return render_template_schedule("groups/schedule.html", **{
+        "schedule": schedule
+    })
+
+@app.route("/report/foreign-for-tech-2/")
+def foreign_for_tech_2():
+    """
+    расписание иностранных для гуманитарных специальностей
+    :return:
+    """
+    FOREIGN_TECH_CHAID_ID = 217
+    chair = Chair.query.get(FOREIGN_TECH_CHAID_ID)
+    schedule = Raspis.get_for_chair(chair, group_by_lesson=True, key_template='{discipline_id}_{nt}_{fac_id}')
+
+    if request.is_xhr:
+        return flask.jsonify(schedule)
+
+    return render_template_schedule("groups/schedule.html", **{
+        "schedule": schedule
+    })
