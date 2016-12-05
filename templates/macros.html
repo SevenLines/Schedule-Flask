@@ -22,7 +22,7 @@
                 <span>{{ lesson.faculty.title }}</span>
             </div>
         {% endif %}
-        <div class="groups{% if lesson.groups|length > 20 %} collapse{% endif %}">
+        <div class="groups{% if lesson.groups|length > 40 %} collapse{% endif %}">
             {% for g in lesson.groups %}
                 <a href="{{ url_for("group_schedule", kont_id=g.id) }}" class="item">
                     {{ g.get_title() }}

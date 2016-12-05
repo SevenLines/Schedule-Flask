@@ -288,7 +288,7 @@ class Raspis(db.Model):
                             for lesson in dlessons[1:]:
                                 weeks[week][key].groups += lesson.groups
                             weeks[week][key].groups.sort(key=lambda l: l.title)
-                        weeks[week] = weeks[week].values()
+                        weeks[week] = list(weeks[week].values())
 
         return schedule
 

@@ -133,7 +133,7 @@ def foreign_for_humans():
 @app.route("/report/foreign-for-tech-1/")
 def foreign_for_tech_1():
     """
-    расписание иностранных для гуманитарных специальностей
+    расписание иностранных для технических специальностей 1
     :return:
     """
     FOREIGN_TECH_CHAID_ID = 216
@@ -150,7 +150,7 @@ def foreign_for_tech_1():
 @app.route("/report/foreign-for-tech-2/")
 def foreign_for_tech_2():
     """
-    расписание иностранных для гуманитарных специальностей
+    расписание иностранных для технических специальностей 2
     :return:
     """
     FOREIGN_TECH_CHAID_ID = 217
