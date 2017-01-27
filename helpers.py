@@ -25,6 +25,15 @@ def auditories_json():
                        for auditory in Auditory.query.order_by(Auditory.title)], ensure_ascii=False)
 
 
+def render_template_schedule_json(**data):
+    data.update({
+        "groups_json": groups_json(),
+        "auditories_json": auditories_json(),
+        "teacher_json": teacher_json(),
+    })
+    return data
+
+
 def render_template_schedule(template, **data):
     data.update({
         "groups_json": groups_json(),

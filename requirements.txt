@@ -1,4 +1,5 @@
 Flask
 Flask-SQlAlchemy
 Flask-DebugToolbar
+Flask-RESTful
 pyodbc
