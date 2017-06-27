@@ -110,7 +110,8 @@ def physical_education_schedule():
         return flask.jsonify(schedule)
 
     return render_template_schedule("groups/schedule.html", **{
-        "schedule": schedule
+        "schedule": schedule,
+        # "show_groups": False
     })
 
 @app.route("/report/foreign-for-humans/")

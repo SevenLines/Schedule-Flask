@@ -1,4 +1,4 @@
-{% macro lesson_tags_inner(lesson, group) %}
+{% macro lesson_tags_inner(lesson, group, show_groups) %}
     <div class="lesson-info {{ lesson.raspnagr.nt|lesson_type_class }}">
         <div class="discipline">
             <a href="{{ url_for("discipline_schedule", discipline_id=lesson.raspnagr.discipline.id) }}">
@@ -22,6 +22,7 @@
                 <span>{{ lesson.faculty.title }}</span>
             </div>
         {% endif %}
+    {% if show_groups %}
         <div class="groups{% if lesson.groups|length > 40 %} collapse{% endif %}">
             {% for g in lesson.groups %}
                 <a href="{{ url_for("group_schedule", kont_id=g.id) }}" class="item">
@@ -29,13 +30,14 @@
                 </a>
             {% endfor %}
         </div>
+    {% endif %}
     </div>
 {% endmacro %}
 
-{% macro lesson_tags(lessons, group) %}
+{% macro lesson_tags(lessons, group, show_groups) %}
     {% for lesson in  lessons %}
         <div class="mask">
-            {{ lesson_tags_inner(lesson, group) }}
+            {{ lesson_tags_inner(lesson, group, show_groups) }}
         </div>
     {% endfor %}
 {% endmacro %}
