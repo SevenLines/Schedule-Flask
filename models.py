@@ -266,6 +266,8 @@ class Raspis(db.Model):
 
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].append(lesson)
             schedule[lesson.para][(lesson.day - 1) % 7 + 1][week].sort(key=lambda l: l.groups[0].title)
+            lesson.kurs_list = {getattr(i, 'kurs') if hasattr(i, 'kurs') else i.kontkurs.kurs for i in lesson.groups}
+
 
         if group_by_lesson:
             for para, days in schedule.items():

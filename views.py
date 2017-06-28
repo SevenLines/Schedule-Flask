@@ -111,7 +111,8 @@ def physical_education_schedule():
 
     return render_template_schedule("groups/schedule.html", **{
         "schedule": schedule,
-        # "show_groups": False
+        "show_kurs": True,
+        "show_groups": False
     })
 
 @app.route("/report/foreign-for-humans/")

@@ -36,14 +36,14 @@
                                 <div class="cell-back odd {% if not lessons_odd %}empty{% endif %}"></div>
                                 <div class="cell-back even {% if not lessons_even %}empty{% endif %}"></div>
                                 <div class="lesson odd {% if not lessons_odd %}empty{% endif %}">
-                                    {{ macros.lesson_tags(lessons_odd, group, show_groups) }}
+                                    {{ macros.lesson_tags(lessons_odd, group, show_groups, show_kurs) }}
                                 </div>
                                 <div class="lesson even {% if not lessons_even %}empty{% endif %}">
-                                    {{ macros.lesson_tags(lessons_even, group, show_groups) }}
+                                    {{ macros.lesson_tags(lessons_even, group, show_groups, show_kurs) }}
                                 </div>
                             {% elif lessons_every %}
                                <div class="lesson everyweek">
-                                    {{ macros.lesson_tags(lessons_every, group, show_groups) }}
+                                    {{ macros.lesson_tags(lessons_every, group, show_groups, show_kurs) }}
                                 </div>
                             {% endif %}
                         </td>
