@@ -33,20 +33,20 @@ table.schedule {
       transition: all 0.2s;
       cursor: pointer; }
       table.schedule .lesson .lesson-info.lect {
-        background-color: #ffccde;
-        border: 2px solid #ff99bd; }
+        background-color: #ffb6c7;
+        border: 2px solid #ff83a0; }
         table.schedule .lesson .lesson-info.lect:hover {
-          background-color: #ffe6ef; }
+          background-color: #ffd0db; }
       table.schedule .lesson .lesson-info.pract {
-        background-color: #b8e78f;
-        border: 2px solid #9dde65; }
+        background-color: #cef200;
+        border: 2px solid #a3bf00; }
         table.schedule .lesson .lesson-info.pract:hover {
-          background-color: #c5eca4; }
+          background-color: #dbff0d; }
       table.schedule .lesson .lesson-info.lab {
-        background-color: #e7e581;
-        border: 2px solid #dfdc56; }
+        background-color: #ffd23e;
+        border: 2px solid #ffc60b; }
         table.schedule .lesson .lesson-info.lab:hover {
-          background-color: #ebe996; }
+          background-color: #ffd858; }
     table.schedule .lesson a {
       -webkit-transition: all 0.2s;
       -moz-transition: all 0.2s;

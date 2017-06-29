@@ -1,10 +1,12 @@
-{% macro lesson_tags_inner(lesson, group, show_groups, show_kurs) %}
+{% macro lesson_tags_inner(lesson, group, show_groups, show_kurs, show_discipline) %}
     <div class="lesson-info {{ lesson.raspnagr.nt|lesson_type_class }}">
+    {% if show_discipline %}
         <div class="discipline">
             <a href="{{ url_for("discipline_schedule", discipline_id=lesson.raspnagr.discipline.id) }}">
                 {{ lesson.raspnagr.discipline.title }}
             </a>
         </div>
+    {% endif %}
         {% if lesson.raspnagr.teacher %}
             <span class="teacher">
                 <a href="{{ url_for("teacher_schedule", teacher_id=lesson.raspnagr.teacher.id) }}">
@@ -19,7 +21,9 @@
         </span>
         {% if group is undefined %}
             <div class="fac">
+            {% if not show_discipline %} <b>{% endif %}
                 <span>{{ lesson.faculty.title }}</span>
+            {% if not show_discipline %} </b>{% endif %}
             </div>
         {% endif %}
     {% if show_kurs %}
@@ -44,10 +48,10 @@
     </div>
 {% endmacro %}
 
-{% macro lesson_tags(lessons, group, show_groups, show_kurs) %}
+{% macro lesson_tags(lessons, group, show_groups, show_kurs, show_discipline) %}
     {% for lesson in  lessons %}
         <div class="mask">
-            {{ lesson_tags_inner(lesson, group, show_groups, show_kurs) }}
+            {{ lesson_tags_inner(lesson, group, show_groups, show_kurs, show_discipline) }}
         </div>
     {% endfor %}
 {% endmacro %}

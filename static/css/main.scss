@@ -52,13 +52,13 @@ table.schedule {
       }
 
       &.lect {
-        @include lesson-frame(#ffccde);
+        @include lesson-frame(#ffb6c7);
       }
       &.pract {
-        @include lesson-frame(#b8e78f);
+        @include lesson-frame(#cef200);
       }
       &.lab {
-        @include lesson-frame(#e7e581);
+        @include lesson-frame(#ffd23e);
       }
     }
 

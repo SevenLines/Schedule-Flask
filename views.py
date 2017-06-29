@@ -112,7 +112,8 @@ def physical_education_schedule():
     return render_template_schedule("groups/schedule.html", **{
         "schedule": schedule,
         "show_kurs": True,
-        "show_groups": False
+        # "show_groups": False,
+        "show_discipline": False
     })
 
 @app.route("/report/foreign-for-humans/")
@@ -129,7 +130,7 @@ def foreign_for_humans():
         return flask.jsonify(schedule)
 
     return render_template_schedule("groups/schedule.html", **{
-        "schedule": schedule
+        "schedule": schedule,
     })
 
 @app.route("/report/foreign-for-tech-1/")
@@ -146,7 +147,8 @@ def foreign_for_tech_1():
         return flask.jsonify(schedule)
 
     return render_template_schedule("groups/schedule.html", **{
-        "schedule": schedule
+        "schedule": schedule,
+        "show_kurs": True,
     })
 
 @app.route("/report/foreign-for-tech-2/")
@@ -163,5 +165,6 @@ def foreign_for_tech_2():
         return flask.jsonify(schedule)
 
     return render_template_schedule("groups/schedule.html", **{
-        "schedule": schedule
+        "schedule": schedule,
+        "show_kurs": True,
     })

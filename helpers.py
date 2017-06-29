@@ -41,5 +41,6 @@ def render_template_schedule(template, **data):
         "teacher_json": teacher_json(),
         "show_groups": data.get("show_groups", True),
         "show_kurs": data.get("show_kurs", False),
+        "show_discipline": data.get("show_discipline", True),
     })
     return render_template(template, **data)
